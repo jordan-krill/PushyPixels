@@ -1,14 +1,46 @@
+function love.load()
+    love.window.setMode(1280, 800, {resizable=true, vsync=false, minwidth= 400, minheight=300})
+    -- in this sprite sheet each sprite is 16 pixels wide and 18 pixels high with each sprite showing for 1 sec
+    animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
+    grid_x = 600
+    grid_y = 400
+    floor = {}
+    tile = love.graphics.newImage('floor.png')
+    block_width = tile:getWidth()
+    block_height = tile:getHeight()
+    block_depth = block_height / 2
+    grid_size = 15
+    grid = {}
+    for x = 1, grid_size do 
+        grid[x] = {}
+        for y = 1, grid_size do
+            grid[x][y] = 1
+        end
+    end
+end
+
 function love.draw()
     local spriteNum = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
     --currentTime / duration" is between 0 and 1. Which represents the percentage. 0.25 means 25% of the animation has passed.
     --Considering this we can search for the correct image to use! Since we already have a number between 0 and 1 we can simply multiply this percentage with our total amount of images and get a number between 0 and 6!
     love.graphics.draw(animation.spriteSheet, animation.quads[spriteNum], 0, 0, 0, 4)
+    red = 88 / 250
+    green = 202 / 250
+    blue = 202 / 250
+    color = {red, green, blue}
+    love.graphics.setBackgroundColor(color)
+
+    for x = 1, grid_size do
+        for y = 1, grid_size do
+            love.graphics.draw(tile,
+                grid_x + ((y-x) * (block_width /2)),
+                grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
+        end
+    end
+    
 end
 
-function love.load()
-    -- in this sprite sheet each sprite is 16 pixels wide and 18 pixels high with each sprite showing for 1 sec
-    animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
-end
+
         
 -- dt which is delta time which is time since the last frame
 function love.update(dt)
@@ -37,3 +69,4 @@ function newAnimation(image, width, height, duration)
     animation.currentTime = 0
     return animation
 end
+
