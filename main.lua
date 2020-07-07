@@ -1,35 +1,30 @@
+require("table")
+
 function love.load()
     love.window.setMode(1280, 800, {resizable=true, vsync=false, minwidth= 400, minheight=300})
     -- in this sprite sheet each sprite is 16 pixels wide and 18 pixels high with each sprite showing for 1 sec
     animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
+
+    -- setting the center of the arena
     grid_x = 600
     grid_y = 400
-    floor = {}
     tile = love.graphics.newImage('floor.png')
+    --this sets up the grid for laying the cubes out for the arena
     block_width = tile:getWidth()
     block_height = tile:getHeight()
     block_depth = block_height / 2
     grid_size = 15
-    grid = {}
-    for x = 1, grid_size do 
-        grid[x] = {}
-        for y = 1, grid_size do
-            grid[x][y] = 1
-        end
+    rand_block_size = 6
+    random_blocks = {}
+    for x = 1, rand_block_size do
+        table.insert(random_blocks, { x = love.math.random(grid_x / 2, grid_x * 2), y = love.math.random(grid_y / 2, grid_y * 2)})
     end
+
+    
 end
 
 function love.draw()
-    local spriteNum = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
-    --currentTime / duration" is between 0 and 1. Which represents the percentage. 0.25 means 25% of the animation has passed.
-    --Considering this we can search for the correct image to use! Since we already have a number between 0 and 1 we can simply multiply this percentage with our total amount of images and get a number between 0 and 6!
-    love.graphics.draw(animation.spriteSheet, animation.quads[spriteNum], 0, 0, 0, 4)
-    red = 88 / 250
-    green = 202 / 250
-    blue = 202 / 250
-    color = {red, green, blue}
-    love.graphics.setBackgroundColor(color)
-
+    -- this generates the arena
     for x = 1, grid_size do
         for y = 1, grid_size do
             love.graphics.draw(tile,
@@ -37,6 +32,26 @@ function love.draw()
                 grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
         end
     end
+    
+    --love.graphics.print("This is a pretty lame example.", 10, 200)
+
+    for i, v in ipairs(random_blocks) do
+        love.graphics.print(tostring(random_blocks), 10, 200)
+        love.graphics.draw(tile, random_blocks[i].x, random_blocks[i].y)
+    end
+
+    local spriteNum = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
+    --currentTime / duration" is between 0 and 1. Which represents the percentage. 0.25 means 25% of the animation has passed.
+    --Considering this we can search for the correct image to use! Since we already have a number between 0 and 1 we can simply multiply this percentage with our total amount of images and get a number between 0 and 6!
+    love.graphics.draw(animation.spriteSheet, animation.quads[spriteNum], 0, 0, 0, 4)
+    -- for x = 1, 8 do
+    --     love.graphics.draw(tile, math.random(grid_x / 2, grid_x * 2), math.random(grid_y / 2, grid_y * 2))
+    -- end
+    red = 88 / 250
+    green = 202 / 250
+    blue = 202 / 250
+    color = {red, green, blue}
+    love.graphics.setBackgroundColor(color)
     
 end
 
