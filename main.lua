@@ -8,35 +8,33 @@ function love.load()
     --background = newAnimation(love.graphics.newImage("galaxy-background1.png"), 322, 322, 5)
     
     animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
-<<<<<<< HEAD
-
-    -- setting the center of the arena
-    grid_x = 600
-    grid_y = 400
-    tile = love.graphics.newImage('floor.png')
-    --this sets up the grid for laying the cubes out for the arena
-=======
     -- grid_x = 600
     -- grid_y = 400
     tile = love.graphics.newImage('floor.png')
     grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
     grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
-    floor = {}
->>>>>>> 56df86fcc62dff1ceef4ec14f091e770474fe07f
     block_width = tile:getWidth()
     block_height = tile:getHeight()
     block_depth = block_height / 2
     grid_size = 15
-    rand_block_size = 6
+    rand_block_size = 2
     random_blocks = {}
     for x = 1, rand_block_size do
-        table.insert(random_blocks, { x = love.math.random(grid_x / 2, grid_x * 2), y = love.math.random(grid_y / 2, grid_y * 2)})
+        for y = 1, rand_block_size do
+            table.insert(random_blocks, { x = love.math.random((grid_x) + (y-x), (grid_x + ((y-x) * (block_width / 2)))), y = love.math.random((grid_y + (x+y) - (block_depth * (grid_size / 2))), (grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2))))})
+        end
     end
 
     
 end
 
 function love.draw()
+    red = 88 / 250
+    green = 202 / 250
+    blue = 202 / 250
+    color = {red, green, blue}
+    love.graphics.setBackgroundColor(color)
+    
     -- this generates the arena
     for x = 1, grid_size do
         for y = 1, grid_size do
@@ -45,16 +43,13 @@ function love.draw()
                 grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
         end
     end
-    
-    --love.graphics.print("This is a pretty lame example.", 10, 200)
-
-    for i, v in ipairs(random_blocks) do
-        love.graphics.print(tostring(random_blocks), 10, 200)
+    love.graphics.print("First block", grid_x + (6 * (block_width / 2)), (6 + 6) + (2 * (block_depth / 2) - (block_depth * (grid_size / 2)) - block_depth))
+    for i = 1, #random_blocks, 1 do
         love.graphics.draw(tile, random_blocks[i].x, random_blocks[i].y)
     end
 
     local spriteNum = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
-    local backgroundNum = math.floor(background.currentTime / background.duration * #background.quads) + 1
+    --local backgroundNum = math.floor(background.currentTime / background.duration * #background.quads) + 1
     --currentTime / duration" is between 0 and 1. Which represents the percentage. 0.25 means 25% of the animation has passed.
     -- love.graphics.draw(background.spriteSheet, background.quads[backgroundNum],0,0,0,3)
     --Considering this we can search for the correct image to use! Since we already have a number between 0 and 1 we can simply multiply this percentage with our total amount of images and get a number between 0 and 6!
@@ -62,23 +57,14 @@ function love.draw()
     -- for x = 1, 8 do
     --     love.graphics.draw(tile, math.random(grid_x / 2, grid_x * 2), math.random(grid_y / 2, grid_y * 2))
     -- end
-    red = 88 / 250
-    green = 202 / 250
-    blue = 202 / 250
-    color = {red, green, blue}
-    love.graphics.setBackgroundColor(color)
-<<<<<<< HEAD
-=======
 
-
-    for x = 1, grid_size do
-        for y = 1, grid_size do
-            love.graphics.draw(tile,
-                grid_x + ((y-x) * (block_width /2)),
-                grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
-        end
-    end
->>>>>>> 56df86fcc62dff1ceef4ec14f091e770474fe07f
+    -- for x = 1, grid_size do
+    --     for y = 1, grid_size do
+    --         love.graphics.draw(tile,
+    --             grid_x + ((y-x) * (block_width /2)),
+    --             grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
+    --     end
+    -- end
     
 end
 
@@ -87,7 +73,7 @@ end
 -- dt which is delta time which is time since the last frame
 function love.update(dt)
     animation.currentTime = animation.currentTime + dt
-    background.currentTime = background.currentTime + dt
+    --background.currentTime = background.currentTime + dt
     --i think this just makes sure each animation is played for the same amount of time
     if animation.currentTime >= animation.duration then
         animation.currentTime = animation.currentTime - animation.duration
