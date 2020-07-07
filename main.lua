@@ -16,14 +16,17 @@ function love.load()
     block_width = tile:getWidth()
     block_height = tile:getHeight()
     block_depth = block_height / 2
-    grid_size = 15
-    rand_block_size = 2
-    random_blocks = {}
-    for x = 1, rand_block_size do
-        for y = 1, rand_block_size do
-            table.insert(random_blocks, { x = love.math.random((grid_x) + (y-x), (grid_x + ((y-x) * (block_width / 2)))), y = love.math.random((grid_y + (x+y) - (block_depth * (grid_size / 2))), (grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2))))})
-        end
-    end
+
+    -- FOR CREATING RANDOM TABLE
+
+    -- grid_size = 15
+    -- rand_block_size = 2
+    -- random_blocks = {}
+    -- for x = 1, rand_block_size do
+    --     for y = 1, rand_block_size do
+    --         table.insert(random_blocks, { x = love.math.random((grid_x) + (y-x), (grid_x + ((y-x) * (block_width / 2)))), y = love.math.random((grid_y + (x+y) - (block_depth * (grid_size / 2))), (grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2))))})
+    --     end
+    -- end
 
     
 end
@@ -43,10 +46,12 @@ function love.draw()
                 grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
         end
     end
-    love.graphics.print("First block", grid_x + (6 * (block_width / 2)), (6 + 6) + (2 * (block_depth / 2) - (block_depth * (grid_size / 2)) - block_depth))
-    for i = 1, #random_blocks, 1 do
-        love.graphics.draw(tile, random_blocks[i].x, random_blocks[i].y)
-    end
+
+    -- FOR DRAWING RANDOM CUBES FOR PUSHING
+
+    -- for i = 1, #random_blocks, 1 do
+    --     love.graphics.draw(tile, random_blocks[i].x, random_blocks[i].y)
+    -- end
 
     local spriteNum = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
     --local backgroundNum = math.floor(background.currentTime / background.duration * #background.quads) + 1
