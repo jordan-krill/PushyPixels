@@ -19,7 +19,7 @@ function love.load()
 
     -- FOR CREATING RANDOM TABLE
 
-    -- grid_size = 15
+    grid_size = 15
     -- rand_block_size = 2
     -- random_blocks = {}
     -- for x = 1, rand_block_size do
