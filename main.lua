@@ -10,7 +10,7 @@ function love.load()
     animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
     -- grid_x = 600
     -- grid_y = 400
-    tile = love.graphics.newImage('floor.png')
+    tile = love.graphics.newImage('metalic_tile.png')
     grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
     grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
     block_width = tile:getWidth()
@@ -108,3 +108,8 @@ function newAnimation(image, width, height, duration)
     return animation
 end
 
+function love.keypressed(k)
+    if k == 'escape' then
+        love.event.quit()
+    end
+end
