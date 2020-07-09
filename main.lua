@@ -1,8 +1,14 @@
 require("table")
 
 function love.load()
+
+    -- Load sprite metadata
+    json = require("json")
+    fileContents = love.filesystem.read("arms_se_red.json")
+    arms_se_red_meta = json.decode(fileContents)
+
     -- love.window.setMode(1280, 800, {resizable=true, vsync=false, minwidth= 400, minheight=300})
-    love.window.setFullscreen(true, "desktop")
+    --love.window.setFullscreen(true, "desktop")
 
     -- in this sprite sheet each sprite is 16 pixels wide and 18 pixels high with each sprite showing for 1 sec
     --background = newAnimation(love.graphics.newImage("galaxy-background1.png"), 322, 322, 5)
@@ -113,3 +119,10 @@ function love.keypressed(k)
         love.event.quit()
     end
 end
+
+function love.keypressed(key, u)
+    --Debug
+    if key == "rctrl" then --set to whatever key you want to use
+       debug.debug()
+    end
+ end
