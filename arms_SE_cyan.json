@@ -1,5 +1,5 @@
 { "frames": {
-   "arms_SE_blue 0.aseprite": {
+   "arms_se_cyan 0.aseprite": {
     "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_SE_blue 1.aseprite": {
+   "arms_se_cyan 1.aseprite": {
     "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -19,7 +19,7 @@
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.2.21-x64",
-  "image": "arms_SE_blue.png",
+  "image": "arms_SE_cyan.png",
   "format": "I8",
   "size": { "w": 128, "h": 64 },
   "scale": "1",

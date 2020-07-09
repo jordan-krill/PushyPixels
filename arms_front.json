@@ -1,5 +1,5 @@
 { "frames": {
-   "arms 0.aseprite": {
+   "arms_front 0.aseprite": {
     "frame": { "x": 0, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 400
    },
-   "arms 1.aseprite": {
+   "arms_front 1.aseprite": {
     "frame": { "x": 40, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -15,7 +15,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms 2.aseprite": {
+   "arms_front 2.aseprite": {
     "frame": { "x": 80, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -23,7 +23,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 200
    },
-   "arms 3.aseprite": {
+   "arms_front 3.aseprite": {
     "frame": { "x": 120, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -31,7 +31,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms 4.aseprite": {
+   "arms_front 4.aseprite": {
     "frame": { "x": 160, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -39,7 +39,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms 5.aseprite": {
+   "arms_front 5.aseprite": {
     "frame": { "x": 200, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -47,7 +47,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms 6.aseprite": {
+   "arms_front 6.aseprite": {
     "frame": { "x": 240, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -55,7 +55,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms 7.aseprite": {
+   "arms_front 7.aseprite": {
     "frame": { "x": 280, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -67,7 +67,7 @@
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.2.21-x64",
-  "image": "arms.png",
+  "image": "arms_front.png",
   "format": "I8",
   "size": { "w": 320, "h": 31 },
   "scale": "1",
