@@ -1,12 +1,30 @@
 local screenWidth, screenHeight = love.graphics.getDimensions()
 local spriteNum_oldHero = 1
 local spriteNum_testSprite = 1
-local x = (screenWidth / 2)
-local y = (screenHeight / 2)
+local xPos_testSprite = (screenWidth / 2)
+local yPos_testSprite = (screenHeight / 2)
+local xPos_oldHero = (screenWidth / 2)
+local yPos_oldHero = (screenHeight / 2)
 
 function love.load()
   animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
   animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 1)
+
+    tile = love.graphics.newImage('floor.png')
+    grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
+    grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
+    block_width = tile:getWidth()
+    block_height = tile:getHeight()
+    block_depth = block_height / 2
+
+    grid_size = 12
+
+    red = 88 / 250
+    green = 202 / 250
+    blue = 202 / 250
+    color = {red, green, blue}
+    love.graphics.setBackgroundColor(color)
+    
 end
 
 function love.update(dt)
@@ -26,7 +44,7 @@ function love.update(dt)
 
 if love.keyboard.isDown('w') then
   spriteNum_testSprite = 1
-  y = y - 10
+  yPos_testSprite = yPos_testSprite - 10
   if love.keyboard.isDown('d') then
     spriteNum_testSprite = 6
   end
@@ -37,7 +55,7 @@ end
 
 if love.keyboard.isDown('s') then
   spriteNum_testSprite = 2
-  y = y + 10
+  yPos_testSprite = yPos_testSprite + 10
   if love.keyboard.isDown('d') then
     spriteNum_testSprite = 8
   end
@@ -48,7 +66,7 @@ end
 
 if love.keyboard.isDown('a') then
   spriteNum_testSprite = 4
-  x = x - 10
+  xPos_testSprite = xPos_testSprite - 10
   if love.keyboard.isDown('w') then
   spriteNum_testSprite = 7
   end
@@ -59,7 +77,55 @@ end
 
 if love.keyboard.isDown('d') then
   spriteNum_testSprite = 3
-  x = x + 10
+  xPos_testSprite = xPos_testSprite + 10
+  if love.keyboard.isDown('w') then
+  spriteNum_testSprite = 6
+  end
+  if love.keyboard.isDown('s') then
+    spriteNum_testSprite = 8
+  end
+end
+
+if love.keyboard.isDown('up') then
+  spriteNum_testSprite = 1
+  yPos_testSprite = yPos_testSprite - 10
+  yPos_oldHero = yPos_oldHero - 10
+  if love.keyboard.isDown('d') then
+    spriteNum_testSprite = 6
+  end
+  if love.keyboard.isDown('a') then
+    spriteNum_testSprite = 7
+  end
+end
+
+if love.keyboard.isDown('down') then
+  spriteNum_testSprite = 2
+  yPos_testSprite = yPos_testSprite + 10
+  yPos_oldHero = yPos_oldHero + 10
+  if love.keyboard.isDown('d') then
+    spriteNum_testSprite = 8
+  end
+  if love.keyboard.isDown('a') then
+    spriteNum_testSprite = 5
+  end
+end
+
+if love.keyboard.isDown('left') then
+  spriteNum_testSprite = 4
+  xPos_testSprite = xPos_testSprite - 10
+  xPos_oldHero = xPos_oldHero - 10
+  if love.keyboard.isDown('w') then
+  spriteNum_testSprite = 7
+  end
+  if love.keyboard.isDown('s') then
+    spriteNum_testSprite = 5
+  end
+end
+
+if love.keyboard.isDown('right') then
+  spriteNum_testSprite = 3
+  xPos_testSprite = xPos_testSprite + 10
+  xPos_oldHero = xPos_oldHero + 10
   if love.keyboard.isDown('w') then
   spriteNum_testSprite = 6
   end
@@ -73,19 +139,33 @@ end
 -- remove comments on lines 40 and 41 if you would like to see an animation in process
 
 function love.draw()
-  love.graphics.print("X position:", 50, 50)
-  love.graphics.print("Y Position:", 50, 70)
-  love.graphics.print(x, 115, 50)
-  love.graphics.print(y, 115, 70)
+  love.graphics.print("testSprite position:", 50, 50)
+  love.graphics.print("testSprite Position:", 50, 70)
+  love.graphics.print(xPos_testSprite, 170, 50)
+  love.graphics.print(yPos_testSprite, 170, 70)
 
-  local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1
-  
-  
+  love.graphics.print("oldHero position:", 50, 130)
+  love.graphics.print("oldHero Position:", 50, 150)
+  love.graphics.print(xPos_oldHero, 170, 130)
+  love.graphics.print(yPos_oldHero, 170, 150)
+
+      -- this generates the arena
+    for x = 1, grid_size do
+        for y = 1, grid_size do
+            love.graphics.draw(tile,
+                grid_x + ((y-x) * (block_width /2)),
+                grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
+        end
+    end
+
+
+
+  local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1 
   --local spriteNum_testSprite = math.floor(animation_testSprite.currentTime / animation_testSprite.duration * #animation_testSprite.quads) + 1
-  --love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], (screenWidth/4) - 8, screenHeight/2 - 9, 0, 4)
+  love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, 0, 4)
   --love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], (screenWidth/2) - 8, screenHeight/2 - 9, 0, 4)
 
-   love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], x, y, 0, 4)
+  love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
 end
 
 function newAnimation(image, width, height, duration)
