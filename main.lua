@@ -5,6 +5,10 @@ local xPos_testSprite = (screenWidth / 2)
 local yPos_testSprite = (screenHeight / 2)
 local xPos_oldHero = (screenWidth / 2)
 local yPos_oldHero = (screenHeight / 2)
+local xPos_rate_yPos_oldHero = 1
+local yPos_rate_yPos_oldHero = 1
+local xPos_rate_yPos_testSprite = 1
+local yPos_rate_yPos_testSprite = 1
 
 function love.load()
   animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
@@ -28,6 +32,7 @@ function love.load()
 end
 
 function love.update(dt)
+  updateSpritePositionDelta()
   animation_oldHero.currentTime = animation_oldHero.currentTime + dt
   if animation_oldHero.currentTime >= animation_oldHero.duration then
     animation_oldHero.currentTime = animation_oldHero.currentTime - animation_oldHero.duration
@@ -38,101 +43,72 @@ function love.update(dt)
     animation_testSprite.currentTime = animation_testSprite.currentTime - animation_testSprite.duration
   end
 
- if not love.keyboard.isDown('w','a','s','d') then
-  spriteNum_testSprite = 9
- end
-
-if love.keyboard.isDown('w') then
-  spriteNum_testSprite = 1
-  yPos_testSprite = yPos_testSprite - 10
-  if love.keyboard.isDown('d') then
-    spriteNum_testSprite = 6
+  if not love.keyboard.isDown('w','a','s','d') then
+    spriteNum_testSprite = 9
   end
+
+ -- testSprite Keyboard Control --
+  if love.keyboard.isDown('w') then
+    spriteNum_testSprite = 1
+    yPos_testSprite = yPos_testSprite - yPos_rate_yPos_testSprite
+    if love.keyboard.isDown('d') then
+      spriteNum_testSprite = 6
+    end
+    if love.keyboard.isDown('a') then
+      spriteNum_testSprite = 7
+    end
+  end
+
+  if love.keyboard.isDown('s') then
+    spriteNum_testSprite = 2
+    yPos_testSprite = yPos_testSprite + yPos_rate_yPos_testSprite
+    if love.keyboard.isDown('d') then
+      spriteNum_testSprite = 8
+    end
+    if love.keyboard.isDown('a') then
+      spriteNum_testSprite = 5
+    end
+  end
+
   if love.keyboard.isDown('a') then
+    spriteNum_testSprite = 4
+    xPos_testSprite = xPos_testSprite - xPos_rate_yPos_testSprite
+    if love.keyboard.isDown('w') then
     spriteNum_testSprite = 7
+    end
+    if love.keyboard.isDown('s') then
+      spriteNum_testSprite = 5
+    end
   end
-end
 
-if love.keyboard.isDown('s') then
-  spriteNum_testSprite = 2
-  yPos_testSprite = yPos_testSprite + 10
   if love.keyboard.isDown('d') then
-    spriteNum_testSprite = 8
-  end
-  if love.keyboard.isDown('a') then
-    spriteNum_testSprite = 5
-  end
-end
-
-if love.keyboard.isDown('a') then
-  spriteNum_testSprite = 4
-  xPos_testSprite = xPos_testSprite - 10
-  if love.keyboard.isDown('w') then
-  spriteNum_testSprite = 7
-  end
-  if love.keyboard.isDown('s') then
-    spriteNum_testSprite = 5
-  end
-end
-
-if love.keyboard.isDown('d') then
-  spriteNum_testSprite = 3
-  xPos_testSprite = xPos_testSprite + 10
-  if love.keyboard.isDown('w') then
-  spriteNum_testSprite = 6
-  end
-  if love.keyboard.isDown('s') then
-    spriteNum_testSprite = 8
-  end
-end
-
-if love.keyboard.isDown('up') then
-  spriteNum_testSprite = 1
-  yPos_testSprite = yPos_testSprite - 10
-  yPos_oldHero = yPos_oldHero - 10
-  if love.keyboard.isDown('d') then
+    spriteNum_testSprite = 3
+    xPos_testSprite = xPos_testSprite + xPos_rate_yPos_testSprite
+    if love.keyboard.isDown('w') then
     spriteNum_testSprite = 6
+    end
+    if love.keyboard.isDown('s') then
+      spriteNum_testSprite = 8
+    end
   end
-  if love.keyboard.isDown('a') then
-    spriteNum_testSprite = 7
-  end
-end
 
-if love.keyboard.isDown('down') then
-  spriteNum_testSprite = 2
-  yPos_testSprite = yPos_testSprite + 10
-  yPos_oldHero = yPos_oldHero + 10
-  if love.keyboard.isDown('d') then
-    spriteNum_testSprite = 8
+-- OldHero Keyboard Control --
+  if love.keyboard.isDown('up') then
+    yPos_oldHero = yPos_oldHero - 10
   end
-  if love.keyboard.isDown('a') then
-    spriteNum_testSprite = 5
-  end
-end
 
-if love.keyboard.isDown('left') then
-  spriteNum_testSprite = 4
-  xPos_testSprite = xPos_testSprite - 10
-  xPos_oldHero = xPos_oldHero - 10
-  if love.keyboard.isDown('w') then
-  spriteNum_testSprite = 7
+  if love.keyboard.isDown('down') then
+    yPos_oldHero = yPos_oldHero + 10
   end
-  if love.keyboard.isDown('s') then
-    spriteNum_testSprite = 5
-  end
-end
 
-if love.keyboard.isDown('right') then
-  spriteNum_testSprite = 3
-  xPos_testSprite = xPos_testSprite + 10
-  xPos_oldHero = xPos_oldHero + 10
-  if love.keyboard.isDown('w') then
-  spriteNum_testSprite = 6
+  if love.keyboard.isDown('left') then
+    xPos_oldHero = xPos_oldHero - 10
   end
-  if love.keyboard.isDown('s') then
-    spriteNum_testSprite = 8
+
+  if love.keyboard.isDown('right') then
+    xPos_oldHero = xPos_oldHero + 10
   end
-end
+
 
 end
 
@@ -183,4 +159,22 @@ function newAnimation(image, width, height, duration)
   animation.currentTime = 0
 
   return animation
+end
+
+function updateSpritePositionDelta()
+
+  if love.keyboard.isDown('kp+') then
+
+    if not love.keyboard.isDown('kp+') then
+      xPos_rate_yPos_oldHero = xPos_rate_yPos_oldHero + 1
+      yPos_rate_yPos_oldHero =  yPos_rate_yPos_oldHero + 1
+      xPos_rate_yPos_testSprite = xPos_rate_yPos_testSprite + 1
+      yPos_rate_yPos_testSprite = yPos_rate_yPos_testSprite + 1
+    end
+  end
+
+  if love.keyboard.isDown('kp-') then
+
+  end
+
 end
