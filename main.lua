@@ -4,7 +4,7 @@ function love.load()
 
     -- Load sprite metadata
     json = require("json")
-    fileContents = love.filesystem.read("arms_se_red.json")
+    fileContents = love.filesystem.read("arms_SE_red.json")
     arms_se_red_meta = json.decode(fileContents)
 
     -- love.window.setMode(1280, 800, {resizable=true, vsync=false, minwidth= 400, minheight=300})
