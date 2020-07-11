@@ -173,24 +173,32 @@ function love.draw()
   love.graphics.print(yPos_oldHero, 170, 150)
 
       -- this generates the arena
-    -- for x = 1, grid_size do
+  
+    local width = love.graphics.getWidth()
+    local height = love.graphics.getHeight()
+    love.graphics.translate(width / 2, height / 2)
+    love.graphics.rotate(math.rad(-30))
+    -- for y = 1, #tileMap do
+    --   for x = 1, #tileMap[y] do
+    --     if tileMap[y][x] == 1 then
+    --       --love.graphics.rectangle("line", -x*64 / 2, -y*32 / 2, 64, 64)
+    --       love.graphics.draw(tile, (y - x)*(block_width / 2), (x+y)*(block_height / 2) - (#tileMap / 2), math.rad(30))
+    --     end
+    --   end
+    -- end
+
+    --   for x = 1, grid_size do
     --     for y = 1, grid_size do
     --         love.graphics.draw(tile,
     --             grid_x + ((y-x) * (block_width /2)),
     --             grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
     --     end
     -- end
-    local width = love.graphics.getWidth()
-    local height = love.graphics.getHeight()
-    love.graphics.translate(width / 2, height / 2)
-    love.graphics.rotate(math.rad(-30))
-    for y = 1, #tileMap do
-      for x = 1, #tileMap[y] do
-        if tileMap[y][x] == 1 then
-          love.graphics.rectangle("line", 64, 64, 64, 64)
-        end
+    for x = 1, grid_size do
+      for y = 1, grid_size do
+          love.graphics.draw(tile,x * block_width / 2, y * block_height / 2)
       end
-    end
+  end
 
     for x = 1, 5 do
         local n = math.floor(enemies[x]['animation'].currentTime / enemies[x]['animation'].duration * #enemies[x]['animation'].quads) + 1
