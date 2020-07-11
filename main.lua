@@ -10,6 +10,9 @@ local yPos_rate_yPos_oldHero = 1
 local xPos_rate_yPos_testSprite = 1
 local yPos_rate_yPos_testSprite = 1
 local enemies = {}
+local state = {}
+state['start-menu'] = true
+state['game'] = false
 
 function love.load()
 
@@ -17,8 +20,8 @@ function love.load()
     json = require("json")
     fileContents = love.filesystem.read("arms_SE_red.json")
     arms_se_red_meta = json.decode(fileContents)
-local screenWidth, screenHeight = love.graphics.getDimensions()
-print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
+    local screenWidth, screenHeight = love.graphics.getDimensions()
+    print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
     animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
     -- grid_x = 600
     -- grid_y = 400
@@ -63,97 +66,106 @@ print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
 end
 
 function love.update(dt)
-  updateSpritePositionDelta()
-  animation_oldHero.currentTime = animation_oldHero.currentTime + dt
-  if animation_oldHero.currentTime >= animation_oldHero.duration then
-    animation_oldHero.currentTime = animation_oldHero.currentTime - animation_oldHero.duration
-  end
+  if state['start-menu'] == true then
+    print("start menu")
 
-  animation_testSprite.currentTime = animation_testSprite.currentTime + dt
-  if animation_testSprite.currentTime >= animation_testSprite.duration then
-    animation_testSprite.currentTime = animation_testSprite.currentTime - animation_testSprite.duration
-  end
-
-  for x=1,5 do 
-    enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime + dt
-    if enemies[x]['animation'].currentTime >= enemies[x]['animation'].duration then
-      enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime - enemies[x]['animation'].duration
+    if love.keyboard.isDown('space') then
+      state['start-menu'] = false
+      state['game'] = true
     end
-  end
-  
-
-  if not love.keyboard.isDown('w','a','s','d') then
-    spriteNum_testSprite = 9
-  end
-
- -- testSprite Keyboard Control --
-  if love.keyboard.isDown('w') then
-    spriteNum_testSprite = 1
-    yPos_testSprite = yPos_testSprite - yPos_rate_yPos_testSprite
-    if love.keyboard.isDown('d') then
-      spriteNum_testSprite = 6
+  elseif state['game'] == true then
+    updateSpritePositionDelta()
+    animation_oldHero.currentTime = animation_oldHero.currentTime + dt
+    if animation_oldHero.currentTime >= animation_oldHero.duration then
+      animation_oldHero.currentTime = animation_oldHero.currentTime - animation_oldHero.duration
     end
+
+    animation_testSprite.currentTime = animation_testSprite.currentTime + dt
+    if animation_testSprite.currentTime >= animation_testSprite.duration then
+      animation_testSprite.currentTime = animation_testSprite.currentTime - animation_testSprite.duration
+    end
+
+    for x=1,5 do 
+      enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime + dt
+      if enemies[x]['animation'].currentTime >= enemies[x]['animation'].duration then
+        enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime - enemies[x]['animation'].duration
+      end
+    end
+    
+
+    if not love.keyboard.isDown('w','a','s','d') then
+      spriteNum_testSprite = 9
+    end
+
+  -- testSprite Keyboard Control --
+    if love.keyboard.isDown('w') then
+      spriteNum_testSprite = 1
+      yPos_testSprite = yPos_testSprite - yPos_rate_yPos_testSprite
+      if love.keyboard.isDown('d') then
+        spriteNum_testSprite = 6
+      end
+      if love.keyboard.isDown('a') then
+        spriteNum_testSprite = 7
+      end
+    end
+
+    if love.keyboard.isDown('s') then
+      spriteNum_testSprite = 2
+      yPos_testSprite = yPos_testSprite + yPos_rate_yPos_testSprite
+      if love.keyboard.isDown('d') then
+        spriteNum_testSprite = 8
+      end
+      if love.keyboard.isDown('a') then
+        spriteNum_testSprite = 5
+      end
+    end
+
     if love.keyboard.isDown('a') then
+      spriteNum_testSprite = 4
+      xPos_testSprite = xPos_testSprite - xPos_rate_yPos_testSprite
+      if love.keyboard.isDown('w') then
       spriteNum_testSprite = 7
+      end
+      if love.keyboard.isDown('s') then
+        spriteNum_testSprite = 5
+      end
     end
-  end
 
-  if love.keyboard.isDown('s') then
-    spriteNum_testSprite = 2
-    yPos_testSprite = yPos_testSprite + yPos_rate_yPos_testSprite
     if love.keyboard.isDown('d') then
-      spriteNum_testSprite = 8
+      spriteNum_testSprite = 3
+      xPos_testSprite = xPos_testSprite + xPos_rate_yPos_testSprite
+      if love.keyboard.isDown('w') then
+      spriteNum_testSprite = 6
+      end
+      if love.keyboard.isDown('s') then
+        spriteNum_testSprite = 8
+      end
     end
-    if love.keyboard.isDown('a') then
-      spriteNum_testSprite = 5
+
+  -- OldHero Keyboard Control --
+    if love.keyboard.isDown('up') then
+      --yPos_oldHero = yPos_oldHero - 10
+      xPos_oldHero = xPos_oldHero + math.sin(math.rad(30)) * dt * 400
+      yPos_oldHero = yPos_oldHero - math.cos(math.rad(30)) * dt * 400
     end
-  end
 
-  if love.keyboard.isDown('a') then
-    spriteNum_testSprite = 4
-    xPos_testSprite = xPos_testSprite - xPos_rate_yPos_testSprite
-    if love.keyboard.isDown('w') then
-    spriteNum_testSprite = 7
+    if love.keyboard.isDown('down') then
+      --yPos_oldHero = yPos_oldHero + 10
+      xPos_oldHero = xPos_oldHero - math.sin(math.rad(30)) * dt * 400
+      yPos_oldHero = yPos_oldHero + math.cos(math.rad(30)) * dt * 400
     end
-    if love.keyboard.isDown('s') then
-      spriteNum_testSprite = 5
+
+    if love.keyboard.isDown('left') then
+      --xPos_oldHero = xPos_oldHero - 10
+      xPos_oldHero = xPos_oldHero - math.cos(math.rad(30)) * dt * 400
+      yPos_oldHero = yPos_oldHero - math.sin(math.rad(30)) * dt * 400
     end
-  end
 
-  if love.keyboard.isDown('d') then
-    spriteNum_testSprite = 3
-    xPos_testSprite = xPos_testSprite + xPos_rate_yPos_testSprite
-    if love.keyboard.isDown('w') then
-    spriteNum_testSprite = 6
+    if love.keyboard.isDown('right') then
+      --xPos_oldHero = xPos_oldHero + 10
+      xPos_oldHero = xPos_oldHero + math.cos(math.rad(30)) * dt * 400
+      yPos_oldHero = yPos_oldHero + math.sin(math.rad(30)) * dt * 400
     end
-    if love.keyboard.isDown('s') then
-      spriteNum_testSprite = 8
-    end
-  end
-
--- OldHero Keyboard Control --
-  if love.keyboard.isDown('up') then
-    --yPos_oldHero = yPos_oldHero - 10
-    xPos_oldHero = xPos_oldHero + math.sin(math.rad(30)) * dt * 400
-    yPos_oldHero = yPos_oldHero - math.cos(math.rad(30)) * dt * 400
-  end
-
-  if love.keyboard.isDown('down') then
-    --yPos_oldHero = yPos_oldHero + 10
-    xPos_oldHero = xPos_oldHero - math.sin(math.rad(30)) * dt * 400
-    yPos_oldHero = yPos_oldHero + math.cos(math.rad(30)) * dt * 400
-  end
-
-  if love.keyboard.isDown('left') then
-    --xPos_oldHero = xPos_oldHero - 10
-    xPos_oldHero = xPos_oldHero - math.cos(math.rad(30)) * dt * 400
-    yPos_oldHero = yPos_oldHero - math.sin(math.rad(30)) * dt * 400
-  end
-
-  if love.keyboard.isDown('right') then
-    --xPos_oldHero = xPos_oldHero + 10
-    xPos_oldHero = xPos_oldHero + math.cos(math.rad(30)) * dt * 400
-    yPos_oldHero = yPos_oldHero + math.sin(math.rad(30)) * dt * 400
   end
 
 
@@ -162,54 +174,58 @@ end
 -- remove comments on lines 40 and 41 if you would like to see an animation in process
 
 function love.draw()
-  love.graphics.print("testSprite position:", 50, 50)
-  love.graphics.print("testSprite Position:", 50, 70)
-  love.graphics.print(xPos_testSprite, 170, 50)
-  love.graphics.print(yPos_testSprite, 170, 70)
-
-  love.graphics.print("oldHero position:", 50, 130)
-  love.graphics.print("oldHero Position:", 50, 150)
-  love.graphics.print(xPos_oldHero, 170, 130)
-  love.graphics.print(yPos_oldHero, 170, 150)
-
-      -- this generates the arena
+  if state['start-menu'] then
+    love.graphics.print("press spacebar to start")
+  elseif state['game'] then
+    love.graphics.print("testSprite position:", 50, 50)
+    love.graphics.print("testSprite Position:", 50, 70)
+    love.graphics.print(xPos_testSprite, 170, 50)
+    love.graphics.print(yPos_testSprite, 170, 70)
   
-    local width = love.graphics.getWidth()
-    local height = love.graphics.getHeight()
-    love.graphics.translate(width / 2, height / 2)
-    love.graphics.rotate(math.rad(-30))
-    -- for y = 1, #tileMap do
-    --   for x = 1, #tileMap[y] do
-    --     if tileMap[y][x] == 1 then
-    --       --love.graphics.rectangle("line", -x*64 / 2, -y*32 / 2, 64, 64)
-    --       love.graphics.draw(tile, (y - x)*(block_width / 2), (x+y)*(block_height / 2) - (#tileMap / 2), math.rad(30))
-    --     end
-    --   end
-    -- end
-
-    --   for x = 1, grid_size do
-    --     for y = 1, grid_size do
-    --         love.graphics.draw(tile,
-    --             grid_x + ((y-x) * (block_width /2)),
-    --             grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
-    --     end
-    -- end
-    for x = 1, grid_size do
-      for y = 1, grid_size do
-          love.graphics.draw(tile,x * block_width / 2, y * block_height / 2)
+    love.graphics.print("oldHero position:", 50, 130)
+    love.graphics.print("oldHero Position:", 50, 150)
+    love.graphics.print(xPos_oldHero, 170, 130)
+    love.graphics.print(yPos_oldHero, 170, 150)
+  
+        -- this generates the arena
+    
+      local width = love.graphics.getWidth()
+      local height = love.graphics.getHeight()
+      love.graphics.translate(width / 2, height / 2)
+      love.graphics.rotate(math.rad(-30))
+      -- for y = 1, #tileMap do
+      --   for x = 1, #tileMap[y] do
+      --     if tileMap[y][x] == 1 then
+      --       --love.graphics.rectangle("line", -x*64 / 2, -y*32 / 2, 64, 64)
+      --       love.graphics.draw(tile, (y - x)*(block_width / 2), (x+y)*(block_height / 2) - (#tileMap / 2), math.rad(30))
+      --     end
+      --   end
+      -- end
+  
+      --   for x = 1, grid_size do
+      --     for y = 1, grid_size do
+      --         love.graphics.draw(tile,
+      --             grid_x + ((y-x) * (block_width /2)),
+      --             grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
+      --     end
+      -- end
+      for x = 1, grid_size do
+        for y = 1, grid_size do
+            love.graphics.draw(tile,x * block_width / 2, y * block_height / 2)
+        end
+    end
+  
+      for x = 1, 5 do
+          local n = math.floor(enemies[x]['animation'].currentTime / enemies[x]['animation'].duration * #enemies[x]['animation'].quads) + 1
+          love.graphics.draw(enemies[x]['animation'].spriteSheet, enemies[x]['animation'].quads[n], enemies[x]['x_location'] + 1, enemies[x]['y_location'],0, 2)
+          updateEnemieMovement(x)
       end
+  
+    local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1 
+    love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, math.rad(30), 4)
+    love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
   end
 
-    for x = 1, 5 do
-        local n = math.floor(enemies[x]['animation'].currentTime / enemies[x]['animation'].duration * #enemies[x]['animation'].quads) + 1
-        love.graphics.draw(enemies[x]['animation'].spriteSheet, enemies[x]['animation'].quads[n], enemies[x]['x_location'] + 1, enemies[x]['y_location'],0, 2)
-        updateEnemieMovement(x)
-    end
-
-  local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1 
-  print(spriteNum_oldHero)
-  love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, math.rad(30), 4)
-  love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
 end
 
 function updateEnemieMovement(i)
