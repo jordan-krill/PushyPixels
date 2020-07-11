@@ -17,22 +17,6 @@ function love.load()
     json = require("json")
     fileContents = love.filesystem.read("arms_SE_red.json")
     arms_se_red_meta = json.decode(fileContents)
-<<<<<<< HEAD
-
-    -- love.window.setMode(1280, 800, {resizable=true, vsync=false, minwidth= 400, minheight=300})
-    --love.window.setFullscreen(true, "desktop")
-
-    -- in this sprite sheet each sprite is 16 pixels wide and 18 pixels high with each sprite showing for 1 sec
-    --background = newAnimation(love.graphics.newImage("galaxy-background1.png"), 322, 322, 5)
-    
-    -- grid_x = 600
-    -- grid_y = 400
-    tile = love.graphics.newImage('metalic_tile.png')
-
-    animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
-    animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 1)
-
-=======
 local screenWidth, screenHeight = love.graphics.getDimensions()
 print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
     animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
@@ -44,7 +28,6 @@ print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
     
     
     --tile = love.graphics.newImage('floor.png')
->>>>>>> master
     grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
     grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
     block_width = tile:getWidth()
@@ -215,37 +198,17 @@ end
 
 function updateSpritePositionDelta()
 
-<<<<<<< HEAD
-    if love.keyboard.isDown('kp+') then
-        if not love.keyboard.isDown('kp+') then
-            xPos_rate_yPos_oldHero = xPos_rate_yPos_oldHero + 1
-            yPos_rate_yPos_oldHero =  yPos_rate_yPos_oldHero + 1
-            xPos_rate_yPos_testSprite = xPos_rate_yPos_testSprite + 1
-            yPos_rate_yPos_testSprite = yPos_rate_yPos_testSprite + 1
-        end
-=======
   if love.keyboard.isDown('kp+') then
     if not love.keyboard.isDown('kp+') then
       xPos_rate_yPos_oldHero = xPos_rate_yPos_oldHero + 1
       yPos_rate_yPos_oldHero =  yPos_rate_yPos_oldHero + 1
       xPos_rate_yPos_testSprite = xPos_rate_yPos_testSprite + 1
       yPos_rate_yPos_testSprite = yPos_rate_yPos_testSprite + 1
->>>>>>> master
     end
 
     if love.keyboard.isDown('kp-') then
 
-<<<<<<< HEAD
-    end
-end
-
-function love.keypressed(k)
-    if k == 'escape' then
-        love.event.quit()
-    end
-=======
   end
->>>>>>> master
 end
 
 function love.keypressed(key, u)
@@ -253,9 +216,6 @@ function love.keypressed(key, u)
     if key == "rctrl" then --set to whatever key you want to use
        debug.debug()
     end
-<<<<<<< HEAD
-end
-=======
 
     if k == 'escape' then
         love.event.quit()
@@ -263,4 +223,3 @@ end
  end
 
 
->>>>>>> master
