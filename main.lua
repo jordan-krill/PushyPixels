@@ -12,43 +12,72 @@ local yPos_rate_yPos_testSprite = 1
 local enemies = {}
 
 function love.load()
+  json = require("json")
+  player = requre("player")
 
-    -- Load sprite metadata
-    json = require("json")
-    fileContents = love.filesystem.read("arms_SE_red.json")
-    arms_se_red_meta = json.decode(fileContents)
-local screenWidth, screenHeight = love.graphics.getDimensions()
-print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
-    animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
-    -- grid_x = 600
-    -- grid_y = 400
-    tile = love.graphics.newImage('metalic_tile.png')
-    animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
-    animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 10)
-    
-    
-    --tile = love.graphics.newImage('floor.png')
-    grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
-    grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
-    block_width = tile:getWidth()
-    block_height = tile:getHeight()
-    block_depth = block_height / 2
-    
-    for x = 1, 5 do 
-        local sub_table_item = {}
-        sub_table_item['animation'] = newAnimation(love.graphics.newImage("arms_SE_red.png"), 64, 64, 1)
-        sub_table_item['x_location'] = math.random(grid_x)
-        sub_table_item['y_location'] = math.random(grid_y)
-        enemies[x] = sub_table_item
-    end
+  -- Players
+  players = {
+    red = Player:new("red"),
+    blue = Player:new("blue"),
+    cyan = Player:new("cyan"),
+    green = Player:new("green"),
+  }
 
-    grid_size = 12
+  -- Key Bindings
+  keys = {
+    w = players.red.incrementYHeading,
+    a = players.red.decrementXHeading,
+    s = players.red.decrementYHeading,
+    d = players.red.incrementXHeading,
 
-    red = 88 / 250
-    green = 202 / 250
-    blue = 202 / 250
-    color = {red, green, blue}
-    love.graphics.setBackgroundColor(color)
+    i = players.blue.incrementYHeading,
+    j = players.blue.decrementXHeading,
+    k = players.blue.decrementYHeading,
+    l = players.blue.incrementXHeading,
+
+    up = players.cyan.incrementYHeading,
+    left = players.cyan.decrementXHeading,
+    down = players.cyan.decrementYHeading,
+    right = players.cyan.incrementXHeading,
+
+    kp8 = players.green.incrementYHeading,
+    kp4 = players.green.decrementXHeading,
+    kp5 = players.green.decrementYHeading,
+    kp6 = players.green.incrementXHeading
+  }
+
+  local screenWidth, screenHeight = love.graphics.getDimensions()
+
+  animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
+  -- grid_x = 600
+  -- grid_y = 400
+  tile = love.graphics.newImage('metalic_tile.png')
+  animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
+  animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 10)
+  
+  
+  --tile = love.graphics.newImage('floor.png')
+  grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
+  grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
+  block_width = tile:getWidth()
+  block_height = tile:getHeight()
+  block_depth = block_height / 2
+  
+  for x = 1, 5 do 
+      local sub_table_item = {}
+      sub_table_item['animation'] = newAnimation(love.graphics.newImage("arms_red.png"), 64, 64, 1)
+      sub_table_item['x_location'] = math.random(grid_x)
+      sub_table_item['y_location'] = math.random(grid_y)
+      enemies[x] = sub_table_item
+  end
+
+  grid_size = 12
+
+  red = 88 / 250
+  green = 202 / 250
+  blue = 202 / 250
+  color = {red, green, blue}
+  love.graphics.setBackgroundColor(color)
     
 end
 
@@ -154,7 +183,7 @@ function love.draw()
   love.graphics.print(xPos_oldHero, 170, 130)
   love.graphics.print(yPos_oldHero, 170, 150)
 
-      -- this generates the arena
+    -- Generates arena
     for x = 1, grid_size do
         for y = 1, grid_size do
             love.graphics.draw(tile,
@@ -170,7 +199,7 @@ function love.draw()
     end
 
   local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1 
-  print(spriteNum_oldHero)
+  --print(spriteNum_oldHero)
   love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, 0, 4)
   love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
 end
@@ -179,7 +208,33 @@ function updateEnemieMovement(i)
   enemies[i]['x_location'] = enemies[i]['x_location'] + 0.5
 end
 
-function newAnimation(image, width, height, duration)
+function createSpriteSheetAnimations(img, metadata, frameDuration)
+  local animations = {}
+  
+  for key, value in pairs(metadata.meta.frameTags) do
+    local tag = {}
+    local counter = 0
+    for i=value.from, value.to do
+      -- WARNING frames index could change based off export
+      local frame = metadata.frames[value.name .. counter].frame
+      table.insert(tag, love.graphics.newQuad(frame.x, frame.y, frame.w, frame.h, img:getDimensions()))
+      counter = counter + 1
+    end
+    animations[value.name] = tag
+  end
+
+    -- TODO could use metadata to determine duration
+    animations.duration = frameDuration
+    animations.time = 0
+    -- first animation
+    animations.current_animation = pairs(animations)(animations)
+    animations.index = 0
+
+  return animations
+end
+
+-- TODO do we need this?
+function newAnimation(image, width, height)
   local animation = {}
   animation.spriteSheet = image;
   animation.quads = {};
@@ -207,6 +262,7 @@ function updateSpritePositionDelta()
     end
 
     if love.keyboard.isDown('kp-') then
+    end
 
   end
 end

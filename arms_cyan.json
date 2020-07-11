@@ -1,97 +1,97 @@
 { "frames": {
-   "arms_cyan #punch_se 0.aseprite": {
-    "frame": { "x": 0, "y": 0, "w": 44, "h": 44 },
+   "punch_se0": {
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 10, "y": 13, "w": 44, "h": 44 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #punch_se 1.aseprite": {
-    "frame": { "x": 44, "y": 0, "w": 37, "h": 37 },
+   "punch_se1": {
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 18, "y": 17, "w": 37, "h": 37 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #idle_se.aseprite": {
-    "frame": { "x": 0, "y": 44, "w": 44, "h": 44 },
+   "idle_se0": {
+    "frame": { "x": 0, "y": 64, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 10, "y": 13, "w": 44, "h": 44 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #punch_nw 0.aseprite": {
-    "frame": { "x": 0, "y": 88, "w": 40, "h": 43 },
+   "punch_nw0": {
+    "frame": { "x": 0, "y": 128, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 12, "y": 14, "w": 40, "h": 43 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #punch_nw 1.aseprite": {
-    "frame": { "x": 40, "y": 88, "w": 49, "h": 39 },
+   "punch_nw1": {
+    "frame": { "x": 64, "y": 128, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 2, "y": 15, "w": 49, "h": 39 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #idle_nw.aseprite": {
-    "frame": { "x": 0, "y": 131, "w": 40, "h": 43 },
+   "idle_nw0": {
+    "frame": { "x": 0, "y": 192, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 12, "y": 14, "w": 40, "h": 43 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #punch_sw 0.aseprite": {
-    "frame": { "x": 0, "y": 174, "w": 44, "h": 44 },
+   "punch_sw0": {
+    "frame": { "x": 0, "y": 256, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 10, "y": 13, "w": 44, "h": 44 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #punch_sw 1.aseprite": {
-    "frame": { "x": 44, "y": 174, "w": 37, "h": 37 },
+   "punch_sw1": {
+    "frame": { "x": 64, "y": 256, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 9, "y": 17, "w": 37, "h": 37 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #idle_sw.aseprite": {
-    "frame": { "x": 0, "y": 218, "w": 44, "h": 44 },
+   "idle_sw0": {
+    "frame": { "x": 0, "y": 320, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 10, "y": 13, "w": 44, "h": 44 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #idle_ne 0.aseprite": {
-    "frame": { "x": 0, "y": 262, "w": 40, "h": 43 },
+   "idle_ne0": {
+    "frame": { "x": 0, "y": 384, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 12, "y": 14, "w": 40, "h": 43 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #idle_ne 1.aseprite": {
-    "frame": { "x": 40, "y": 262, "w": 49, "h": 39 },
+   "idle_ne1": {
+    "frame": { "x": 64, "y": 384, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 13, "y": 15, "w": 49, "h": 39 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "arms_cyan #idle_ne.aseprite": {
-    "frame": { "x": 0, "y": 305, "w": 40, "h": 43 },
+   "idle_ne0": {
+    "frame": { "x": 0, "y": 448, "w": 64, "h": 64 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 12, "y": 14, "w": 40, "h": 43 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    }
@@ -101,7 +101,7 @@
   "version": "1.2.21-x64",
   "image": "arms_cyan.png",
   "format": "I8",
-  "size": { "w": 89, "h": 348 },
+  "size": { "w": 128, "h": 512 },
   "scale": "1",
   "frameTags": [
    { "name": "punch_se", "from": 0, "to": 1, "direction": "forward" },
@@ -112,16 +112,6 @@
    { "name": "idle_sw", "from": 8, "to": 8, "direction": "forward" },
    { "name": "idle_ne", "from": 9, "to": 10, "direction": "forward" },
    { "name": "idle_ne", "from": 11, "to": 11, "direction": "forward" }
-  ],
-  "layers": [
-   { "name": "body" },
-   { "name": "legs", "group": "body", "opacity": 255, "blendMode": "normal" },
-   { "name": "left arm", "group": "body", "opacity": 255, "blendMode": "normal" },
-   { "name": "torso", "group": "body", "opacity": 255, "blendMode": "normal" },
-   { "name": "right arm", "group": "body", "opacity": 255, "blendMode": "normal" },
-   { "name": "head", "group": "body", "opacity": 255, "blendMode": "normal" }
-  ],
-  "slices": [
   ]
  }
 }

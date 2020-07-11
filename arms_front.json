@@ -1,5 +1,5 @@
 { "frames": {
-   "arms_front 0.aseprite": {
+   "0": {
     "frame": { "x": 0, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 400
    },
-   "arms_front 1.aseprite": {
+   "1": {
     "frame": { "x": 40, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -15,7 +15,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms_front 2.aseprite": {
+   "2": {
     "frame": { "x": 80, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -23,7 +23,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 200
    },
-   "arms_front 3.aseprite": {
+   "3": {
     "frame": { "x": 120, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -31,7 +31,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms_front 4.aseprite": {
+   "4": {
     "frame": { "x": 160, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -39,7 +39,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms_front 5.aseprite": {
+   "5": {
     "frame": { "x": 200, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -47,7 +47,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms_front 6.aseprite": {
+   "6": {
     "frame": { "x": 240, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -55,7 +55,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "arms_front 7.aseprite": {
+   "7": {
     "frame": { "x": 280, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -72,11 +72,6 @@
   "size": { "w": 320, "h": 31 },
   "scale": "1",
   "frameTags": [
-  ],
-  "layers": [
-   { "name": "merged", "opacity": 255, "blendMode": "normal" }
-  ],
-  "slices": [
   ]
  }
 }
