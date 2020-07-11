@@ -47,6 +47,18 @@ print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
     blue = 202 / 250
     color = {red, green, blue}
     love.graphics.setBackgroundColor(color)
+
+    tileMap={
+      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+      {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+      {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+      {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+      {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+      {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+      {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+      {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    }
     
 end
 
@@ -121,19 +133,27 @@ function love.update(dt)
 
 -- OldHero Keyboard Control --
   if love.keyboard.isDown('up') then
-    yPos_oldHero = yPos_oldHero - 10
+    --yPos_oldHero = yPos_oldHero - 10
+    xPos_oldHero = xPos_oldHero + math.sin(math.rad(30)) * dt * 400
+    yPos_oldHero = yPos_oldHero - math.cos(math.rad(30)) * dt * 400
   end
 
   if love.keyboard.isDown('down') then
-    yPos_oldHero = yPos_oldHero + 10
+    --yPos_oldHero = yPos_oldHero + 10
+    xPos_oldHero = xPos_oldHero - math.sin(math.rad(30)) * dt * 400
+    yPos_oldHero = yPos_oldHero + math.cos(math.rad(30)) * dt * 400
   end
 
   if love.keyboard.isDown('left') then
-    xPos_oldHero = xPos_oldHero - 10
+    --xPos_oldHero = xPos_oldHero - 10
+    xPos_oldHero = xPos_oldHero - math.cos(math.rad(30)) * dt * 400
+    yPos_oldHero = yPos_oldHero - math.sin(math.rad(30)) * dt * 400
   end
 
   if love.keyboard.isDown('right') then
-    xPos_oldHero = xPos_oldHero + 10
+    --xPos_oldHero = xPos_oldHero + 10
+    xPos_oldHero = xPos_oldHero + math.cos(math.rad(30)) * dt * 400
+    yPos_oldHero = yPos_oldHero + math.sin(math.rad(30)) * dt * 400
   end
 
 
@@ -153,12 +173,23 @@ function love.draw()
   love.graphics.print(yPos_oldHero, 170, 150)
 
       -- this generates the arena
-    for x = 1, grid_size do
-        for y = 1, grid_size do
-            love.graphics.draw(tile,
-                grid_x + ((y-x) * (block_width /2)),
-                grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
+    -- for x = 1, grid_size do
+    --     for y = 1, grid_size do
+    --         love.graphics.draw(tile,
+    --             grid_x + ((y-x) * (block_width /2)),
+    --             grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
+    --     end
+    -- end
+    local width = love.graphics.getWidth()
+    local height = love.graphics.getHeight()
+    love.graphics.translate(width / 2, height / 2)
+    love.graphics.rotate(math.rad(-30))
+    for y = 1, #tileMap do
+      for x = 1, #tileMap[y] do
+        if tileMap[y][x] == 1 then
+          love.graphics.rectangle("line", 64, 64, 64, 64)
         end
+      end
     end
 
     for x = 1, 5 do
@@ -169,7 +200,7 @@ function love.draw()
 
   local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1 
   print(spriteNum_oldHero)
-  love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, 0, 4)
+  love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, math.rad(30), 4)
   love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
 end
 
