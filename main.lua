@@ -163,7 +163,8 @@ function love.draw()
 
     for x = 1, 5 do
         local n = math.floor(enemies[x]['animation'].currentTime / enemies[x]['animation'].duration * #enemies[x]['animation'].quads) + 1
-        love.graphics.draw(enemies[x]['animation'].spriteSheet, enemies[x]['animation'].quads[n], enemies[x]['x_location'], enemies[x]['y_location'],0, 2)
+        love.graphics.draw(enemies[x]['animation'].spriteSheet, enemies[x]['animation'].quads[n], enemies[x]['x_location'] + 1, enemies[x]['y_location'],0, 2)
+        updateEnemieMovement(x)
     end
 
   local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1 
@@ -172,10 +173,8 @@ function love.draw()
   love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
 end
 
-function getQuadNumber(_animation)
-
-  return math.floor(_animation.currentTime / _animation.duration * #_animaton.quads) + 1
-
+function updateEnemieMovement(i)
+  enemies[i]['x_location'] = enemies[i]['x_location'] + 0.5
 end
 
 function newAnimation(image, width, height, duration)
