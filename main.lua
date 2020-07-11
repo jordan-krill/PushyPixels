@@ -26,8 +26,6 @@ print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
     animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
     animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 10)
     
-    
-    --tile = love.graphics.newImage('floor.png')
     grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
     grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
     block_width = tile:getWidth()
