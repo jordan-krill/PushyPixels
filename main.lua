@@ -9,13 +9,15 @@ local xPos_rate_yPos_oldHero = 1
 local yPos_rate_yPos_oldHero = 1
 local xPos_rate_yPos_testSprite = 1
 local yPos_rate_yPos_testSprite = 1
+local enemies = {}
 
 function love.load()
 
     -- Load sprite metadata
     json = require("json")
-    fileContents = love.filesystem.read("arms_se_red.json")
+    fileContents = love.filesystem.read("arms_SE_red.json")
     arms_se_red_meta = json.decode(fileContents)
+<<<<<<< HEAD
 
     -- love.window.setMode(1280, 800, {resizable=true, vsync=false, minwidth= 400, minheight=300})
     --love.window.setFullscreen(true, "desktop")
@@ -30,11 +32,32 @@ function love.load()
     animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
     animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 1)
 
+=======
+local screenWidth, screenHeight = love.graphics.getDimensions()
+print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
+    animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
+    -- grid_x = 600
+    -- grid_y = 400
+    tile = love.graphics.newImage('metalic_tile.png')
+    animation_oldHero = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
+    animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 10)
+    
+    
+    --tile = love.graphics.newImage('floor.png')
+>>>>>>> master
     grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
     grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
     block_width = tile:getWidth()
     block_height = tile:getHeight()
     block_depth = block_height / 2
+    
+    for x = 1, 5 do 
+        local sub_table_item = {}
+        sub_table_item['animation'] = newAnimation(love.graphics.newImage("arms_SE_red.png"), 64, 64, 1)
+        sub_table_item['x_location'] = math.random(grid_x)
+        sub_table_item['y_location'] = math.random(grid_y)
+        enemies[x] = sub_table_item
+    end
 
     grid_size = 12
 
@@ -57,6 +80,14 @@ function love.update(dt)
   if animation_testSprite.currentTime >= animation_testSprite.duration then
     animation_testSprite.currentTime = animation_testSprite.currentTime - animation_testSprite.duration
   end
+
+  for x=1,5 do 
+    enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime + dt
+    if enemies[x]['animation'].currentTime >= enemies[x]['animation'].duration then
+      enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime - enemies[x]['animation'].duration
+    end
+  end
+  
 
   if not love.keyboard.isDown('w','a','s','d') then
     spriteNum_testSprite = 9
@@ -149,14 +180,20 @@ function love.draw()
         end
     end
 
-
+    for x = 1, 5 do
+        local n = math.floor(enemies[x]['animation'].currentTime / enemies[x]['animation'].duration * #enemies[x]['animation'].quads) + 1
+        love.graphics.draw(enemies[x]['animation'].spriteSheet, enemies[x]['animation'].quads[n], enemies[x]['x_location'] + 1, enemies[x]['y_location'],0, 2)
+        updateEnemieMovement(x)
+    end
 
   local spriteNum_oldHero = math.floor(animation_oldHero.currentTime / animation_oldHero.duration * #animation_oldHero.quads) + 1 
-  --local spriteNum_testSprite = math.floor(animation_testSprite.currentTime / animation_testSprite.duration * #animation_testSprite.quads) + 1
+  print(spriteNum_oldHero)
   love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, 0, 4)
-  --love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], (screenWidth/2) - 8, screenHeight/2 - 9, 0, 4)
-
   love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
+end
+
+function updateEnemieMovement(i)
+  enemies[i]['x_location'] = enemies[i]['x_location'] + 0.5
 end
 
 function newAnimation(image, width, height, duration)
@@ -178,6 +215,7 @@ end
 
 function updateSpritePositionDelta()
 
+<<<<<<< HEAD
     if love.keyboard.isDown('kp+') then
         if not love.keyboard.isDown('kp+') then
             xPos_rate_yPos_oldHero = xPos_rate_yPos_oldHero + 1
@@ -185,10 +223,19 @@ function updateSpritePositionDelta()
             xPos_rate_yPos_testSprite = xPos_rate_yPos_testSprite + 1
             yPos_rate_yPos_testSprite = yPos_rate_yPos_testSprite + 1
         end
+=======
+  if love.keyboard.isDown('kp+') then
+    if not love.keyboard.isDown('kp+') then
+      xPos_rate_yPos_oldHero = xPos_rate_yPos_oldHero + 1
+      yPos_rate_yPos_oldHero =  yPos_rate_yPos_oldHero + 1
+      xPos_rate_yPos_testSprite = xPos_rate_yPos_testSprite + 1
+      yPos_rate_yPos_testSprite = yPos_rate_yPos_testSprite + 1
+>>>>>>> master
     end
 
     if love.keyboard.isDown('kp-') then
 
+<<<<<<< HEAD
     end
 end
 
@@ -196,6 +243,9 @@ function love.keypressed(k)
     if k == 'escape' then
         love.event.quit()
     end
+=======
+  end
+>>>>>>> master
 end
 
 function love.keypressed(key, u)
@@ -203,4 +253,14 @@ function love.keypressed(key, u)
     if key == "rctrl" then --set to whatever key you want to use
        debug.debug()
     end
+<<<<<<< HEAD
 end
+=======
+
+    if k == 'escape' then
+        love.event.quit()
+    end
+ end
+
+
+>>>>>>> master
