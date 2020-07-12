@@ -16,15 +16,15 @@ function love.load()
 
     map = {
 		  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,0 , 0},
+		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     }
@@ -148,26 +148,26 @@ function love.update(dt)
 -- OldHero Keyboard Control --
   if love.keyboard.isDown('up') then
     yPos_oldHero = yPos_oldHero - 10
-    player.grid_x = (player.grid_x + 10) + math.sin(math.rad(30))
-    player.grid_y = (player.grid_y - 10) - math.cos(math.rad(30))
+    player.grid_x = (player.grid_x) + math.sin(math.rad(30)) + 10
+    player.grid_y = (player.grid_y) - math.cos(math.rad(30)) - 10
   end
 
   if love.keyboard.isDown('down') then
     yPos_oldHero = yPos_oldHero + 10
-    player.grid_x = player.grid_x - math.sin(math.rad(60)) - 10
-    player.grid_y = player.grid_y + math.cos(math.rad(60)) + 10
+    player.grid_x = player.grid_x - math.sin(math.rad(30)) - 10
+    player.grid_y = player.grid_y + math.cos(math.rad(30)) + 10
   end
 
   if love.keyboard.isDown('left') then
     xPos_oldHero = xPos_oldHero - 10
-    player.grid_x = player.grid_x - math.cos(math.rad(60)) - 10
-    player.grid_y = player.grid_y - math.sin(math.rad(60)) - 10
+    player.grid_x = player.grid_x - math.cos(math.rad(30)) - 10
+    player.grid_y = player.grid_y - math.sin(math.rad(30)) - 10
   end
 
   if love.keyboard.isDown('right') then
     xPos_oldHero = xPos_oldHero + 10
-    player.grid_x = player.grid_x + math.cos(math.rad(60)) + 10
-    player.grid_y = player.grid_y + math.sin(math.rad(60)) + 10
+    player.grid_x = player.grid_x + math.cos(math.rad(30)) + 10
+    player.grid_y = player.grid_y + math.sin(math.rad(30)) + 10
   end
 
   if offMap() then
