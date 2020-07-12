@@ -165,7 +165,8 @@ end
 
 function love.draw()
   if state['start'] then
-    love.graphics.print('Press Space to start the game', 150, 150)
+    love.graphics.print('Press Space to start the game with sky map', 150, 150)
+    love.graphics.print('Press t to start game the game with galaxy map', 150, 175)
     -- love.graphics.print  
   elseif state['game'] then
     local bg_tracker = math.floor(bg.currentTime / bg.duration * #bg.quads) + 1
