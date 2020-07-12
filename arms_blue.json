@@ -1,5 +1,5 @@
 { "frames": {
-   "punch_se0": {
+   "punch_se1": {
     "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "punch_se1": {
+   "punch_se2": {
     "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -15,7 +15,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "idle_se0": {
+   "idle_se1": {
     "frame": { "x": 0, "y": 64, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -23,7 +23,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "punch_nw0": {
+   "punch_nw1": {
     "frame": { "x": 0, "y": 128, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -31,7 +31,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "punch_nw1": {
+   "punch_nw2": {
     "frame": { "x": 64, "y": 128, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -39,7 +39,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "idle_nw0": {
+   "idle_nw1": {
     "frame": { "x": 0, "y": 192, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -47,7 +47,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "punch_sw0": {
+   "punch_sw1": {
     "frame": { "x": 0, "y": 256, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -55,7 +55,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "punch_sw1": {
+   "punch_sw2": {
     "frame": { "x": 64, "y": 256, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -63,7 +63,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "idle_sw0": {
+   "idle_sw1": {
     "frame": { "x": 0, "y": 320, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -71,7 +71,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "punch_ne0": {
+   "punch_ne1": {
     "frame": { "x": 0, "y": 384, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -79,7 +79,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "punch_ne1": {
+   "punch_ne2": {
     "frame": { "x": 64, "y": 384, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -87,7 +87,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "idle_ne0": {
+   "idle_ne1": {
     "frame": { "x": 0, "y": 448, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,

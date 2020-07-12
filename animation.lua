@@ -5,7 +5,7 @@ function animation:createSpriteSheetAnimations(img, metadata, frameDuration)
     
     for key, value in pairs(metadata.meta.frameTags) do
       local tag = {}
-      local counter = 0
+      local counter = 1
       for i=value.from, value.to do
         -- WARNING frames index could change based off export
         local frame = metadata.frames[value.name .. counter].frame

@@ -80,7 +80,10 @@ function player:load()
 end
 
 function player:draw()
-    love.graphics.draw(self.sprite_sheet, self.animations[self.animations.current_animation][self.animations.index], self.position.x, self.position.y)
+    local spriteSize = self.metadata.frames[self.animations.current_animation .. self.animations.index].sourceSize
+    local x = self.position.x + (spriteSize.w / 2)
+    local y = self.position.y + spriteSize.h
+    love.graphics.draw(self.sprite_sheet, self.animations[self.animations.current_animation][self.animations.index], x, y)
 end
 
 function player:incrementXHeading()
