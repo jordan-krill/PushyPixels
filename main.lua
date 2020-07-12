@@ -1,12 +1,7 @@
 local screenWidth, screenHeight = love.graphics.getDimensions()
-local spriteNum_oldHero = 1
 local spriteNum_testSprite = 1
 local xPos_testSprite = (screenWidth / 2)
 local yPos_testSprite = (screenHeight / 2)
-local xPos_oldHero = (screenWidth / 2)
-local yPos_oldHero = (screenHeight / 2)
-local xPos_rate_yPos_oldHero = 1
-local yPos_rate_yPos_oldHero = 1
 local xPos_rate_yPos_testSprite = 1
 local yPos_rate_yPos_testSprite = 1
 local enemies = {}
@@ -223,8 +218,6 @@ function updateSpritePositionDelta()
   if love.keyboard.isDown('kp+') then
 
     if not love.keyboard.isDown('kp+') then
-      xPos_rate_yPos_oldHero = xPos_rate_yPos_oldHero + 1
-      yPos_rate_yPos_oldHero =  yPos_rate_yPos_oldHero + 1
       xPos_rate_yPos_testSprite = xPos_rate_yPos_testSprite + 1
       yPos_rate_yPos_testSprite = yPos_rate_yPos_testSprite + 1
     end
