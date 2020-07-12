@@ -1,0 +1,87 @@
+{ "frames": {
+   "bgclouds 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   },
+   "bgclouds 1.aseprite": {
+    "frame": { "x": 320, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   },
+   "bgclouds 2.aseprite": {
+    "frame": { "x": 640, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   },
+   "bgclouds 3.aseprite": {
+    "frame": { "x": 960, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   },
+   "bgclouds 4.aseprite": {
+    "frame": { "x": 1280, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   },
+   "bgclouds 5.aseprite": {
+    "frame": { "x": 1600, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   },
+   "bgclouds 6.aseprite": {
+    "frame": { "x": 1920, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   },
+   "bgclouds 7.aseprite": {
+    "frame": { "x": 2240, "y": 0, "w": 320, "h": 320 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 320 },
+    "sourceSize": { "w": 320, "h": 320 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.13-x64",
+  "image": "bgclouds.png",
+  "format": "RGBA8888",
+  "size": { "w": 2560, "h": 320 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "bg", "opacity": 255, "blendMode": "normal" },
+   { "name": "sun", "opacity": 255, "blendMode": "normal" },
+   { "name": "cloud1", "opacity": 255, "blendMode": "normal" },
+   { "name": "cloud2", "opacity": 255, "blendMode": "normal" },
+   { "name": "Cloud3", "opacity": 255, "blendMode": "normal" },
+   { "name": "cloud4", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
