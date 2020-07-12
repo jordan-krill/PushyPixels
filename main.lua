@@ -12,41 +12,44 @@ local yPos_rate_yPos_testSprite = 1
 local enemies = {}
 
 function love.load()
+  -- screen
+  love.graphics.setDefaultFilter("nearest", "nearest")
+  love.window.setMode(800, 450, {fullscreen = false})
+  local screenWidth, screenHeight = love.graphics.getDimensions()
+
   json = require("json")
-  player = requre("player")
+  player = require("player")
 
   -- Players
   players = {
-    red = Player:new("red"),
-    blue = Player:new("blue"),
-    cyan = Player:new("cyan"),
-    green = Player:new("green"),
+    red = player:new("red"),
+    blue = player:new("blue"),
+    cyan = player:new("cyan"),
+    green = player:new("green"),
   }
 
   -- Key Bindings
   keys = {
-    w = players.red.incrementYHeading,
-    a = players.red.decrementXHeading,
-    s = players.red.decrementYHeading,
-    d = players.red.incrementXHeading,
+    w = {player = players.red, func = "decrementYHeading"},
+    a = {player = players.red, func = "decrementXHeading"},
+    s = {player = players.red, func = "incrementYHeading"},
+    d = {player = players.red, func = "incrementXHeading"},
 
-    i = players.blue.incrementYHeading,
-    j = players.blue.decrementXHeading,
-    k = players.blue.decrementYHeading,
-    l = players.blue.incrementXHeading,
+    i = {player = players.blue, func = "decrementYHeading"},
+    j = {player = players.blue, func = "decrementXHeading"},
+    k = {player = players.blue, func = "incrementYHeading"},
+    l = {player = players.blue, func = "incrementXHeading"},
 
-    up = players.cyan.incrementYHeading,
-    left = players.cyan.decrementXHeading,
-    down = players.cyan.decrementYHeading,
-    right = players.cyan.incrementXHeading,
+    up = {player = players.cyan, func = "decrementYHeading"},
+    left = {player = players.cyan, func = "decrementXHeading"},
+    down = {player = players.cyan, func = "incrementYHeading"},
+    right = {player = players.cyan, func = "incrementXHeading"},
 
-    kp8 = players.green.incrementYHeading,
-    kp4 = players.green.decrementXHeading,
-    kp5 = players.green.decrementYHeading,
-    kp6 = players.green.incrementXHeading
+    kp8 = {player = players.green, func = "decrementYHeading"},
+    kp4 = {player = players.green, func = "decrementXHeading"},
+    kp5 = {player = players.green, func = "incrementYHeading"},
+    kp6 = {player = players.green, func = "incrementXHeading"}
   }
-
-  local screenWidth, screenHeight = love.graphics.getDimensions()
 
   animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
   -- grid_x = 600
@@ -100,6 +103,18 @@ function love.update(dt)
     end
   end
   
+
+  for key, value in pairs(keys) do
+    if love.keyboard.isDown(key) then
+      value.player[value.func](player)
+    end
+  end
+
+  for key, value in pairs(players) do
+    value:updateAnimation(dt)
+    value:updatePosition()
+  end
+
 
   if not love.keyboard.isDown('w','a','s','d') then
     spriteNum_testSprite = 9
@@ -173,6 +188,8 @@ end
 -- remove comments on lines 40 and 41 if you would like to see an animation in process
 
 function love.draw()
+  love.graphics.scale(2, 2)
+
   love.graphics.print("testSprite position:", 50, 50)
   love.graphics.print("testSprite Position:", 50, 70)
   love.graphics.print(xPos_testSprite, 170, 50)
@@ -202,35 +219,14 @@ function love.draw()
   --print(spriteNum_oldHero)
   love.graphics.draw(animation_oldHero.spriteSheet, animation_oldHero.quads[spriteNum_oldHero], xPos_oldHero, yPos_oldHero, 0, 4)
   love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
+
+  for key, value in pairs(players) do
+    value:draw()
+  end
 end
 
 function updateEnemieMovement(i)
   enemies[i]['x_location'] = enemies[i]['x_location'] + 0.5
-end
-
-function createSpriteSheetAnimations(img, metadata, frameDuration)
-  local animations = {}
-  
-  for key, value in pairs(metadata.meta.frameTags) do
-    local tag = {}
-    local counter = 0
-    for i=value.from, value.to do
-      -- WARNING frames index could change based off export
-      local frame = metadata.frames[value.name .. counter].frame
-      table.insert(tag, love.graphics.newQuad(frame.x, frame.y, frame.w, frame.h, img:getDimensions()))
-      counter = counter + 1
-    end
-    animations[value.name] = tag
-  end
-
-    -- TODO could use metadata to determine duration
-    animations.duration = frameDuration
-    animations.time = 0
-    -- first animation
-    animations.current_animation = pairs(animations)(animations)
-    animations.index = 0
-
-  return animations
 end
 
 -- TODO do we need this?
@@ -240,9 +236,9 @@ function newAnimation(image, width, height)
   animation.quads = {};
 
   for y = 0, image:getHeight() - height, height do
-      for x = 0, image:getWidth() - width, width do
-          table.insert(animation.quads, love.graphics.newQuad(x, y, width, height, image:getDimensions()))
-      end
+    for x = 0, image:getWidth() - width, width do
+      table.insert(animation.quads, love.graphics.newQuad(x, y, width, height, image:getDimensions()))
+    end
   end
 
   animation.duration = duration or 1
@@ -252,8 +248,8 @@ function newAnimation(image, width, height)
 end
 
 function updateSpritePositionDelta()
-
   if love.keyboard.isDown('kp+') then
+
     if not love.keyboard.isDown('kp+') then
       xPos_rate_yPos_oldHero = xPos_rate_yPos_oldHero + 1
       yPos_rate_yPos_oldHero =  yPos_rate_yPos_oldHero + 1
@@ -268,14 +264,13 @@ function updateSpritePositionDelta()
 end
 
 function love.keypressed(key, u)
-    --Debug
-    if key == "rctrl" then --set to whatever key you want to use
-       debug.debug()
-    end
+  if key == "rctrl" then
+    debug.debug()
+  end
 
-    if k == 'escape' then
-        love.event.quit()
-    end
- end
+  if key == 'escape' then
+    love.event.quit()
+  end
+end
 
 

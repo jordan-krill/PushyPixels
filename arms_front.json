@@ -1,5 +1,5 @@
 { "frames": {
-   "0": {
+   "peck_flex0": {
     "frame": { "x": 0, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 400
    },
-   "1": {
+   "peck_flex1": {
     "frame": { "x": 40, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -15,7 +15,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "2": {
+   "peck_flex2": {
     "frame": { "x": 80, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -23,7 +23,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 200
    },
-   "3": {
+   "peck_flex3": {
     "frame": { "x": 120, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -31,7 +31,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "4": {
+   "peck_flex4": {
     "frame": { "x": 160, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -39,7 +39,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "5": {
+   "peck_flex5": {
     "frame": { "x": 200, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -47,7 +47,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "6": {
+   "peck_flex6": {
     "frame": { "x": 240, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -55,7 +55,7 @@
     "sourceSize": { "w": 40, "h": 31 },
     "duration": 100
    },
-   "7": {
+   "peck_flex7": {
     "frame": { "x": 280, "y": 0, "w": 40, "h": 31 },
     "rotated": false,
     "trimmed": false,
@@ -72,6 +72,7 @@
   "size": { "w": 320, "h": 31 },
   "scale": "1",
   "frameTags": [
+   { "name": "peck_flex", "from": 0, "to": 7, "direction": "forward" }
   ]
  }
 }
