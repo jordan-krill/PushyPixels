@@ -71,7 +71,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "idle_ne0": {
+   "punch_ne0": {
     "frame": { "x": 0, "y": 384, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -79,7 +79,7 @@
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 300
    },
-   "idle_ne1": {
+   "punch_ne1": {
     "frame": { "x": 64, "y": 384, "w": 64, "h": 64 },
     "rotated": false,
     "trimmed": false,
@@ -110,7 +110,7 @@
    { "name": "idle_nw", "from": 5, "to": 5, "direction": "forward" },
    { "name": "punch_sw", "from": 6, "to": 7, "direction": "forward" },
    { "name": "idle_sw", "from": 8, "to": 8, "direction": "forward" },
-   { "name": "idle_ne", "from": 9, "to": 10, "direction": "forward" },
+   { "name": "punch_ne", "from": 9, "to": 10, "direction": "forward" },
    { "name": "idle_ne", "from": 11, "to": 11, "direction": "forward" }
   ]
  }

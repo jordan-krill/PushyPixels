@@ -12,43 +12,48 @@ local yPos_rate_yPos_testSprite = 1
 local enemies = {}
 
 function love.load()
-  -- screen
+  -- Screen
+  screen_scalar = 3;
   love.graphics.setDefaultFilter("nearest", "nearest")
-  love.window.setMode(800, 450, {fullscreen = false})
-  local screenWidth, screenHeight = love.graphics.getDimensions()
+  love.window.setMode(640, 360, {fullscreen = false})
+  screenWidth, screenHeight = love.graphics.getDimensions()
 
   json = require("json")
   player = require("player")
 
   -- Players
   players = {
-    red = player:new("red"),
-    blue = player:new("blue"),
-    cyan = player:new("cyan"),
-    green = player:new("green"),
+    player:new("red"),
+    player:new("blue"),
+    player:new("cyan"),
+    player:new("green"),
   }
 
   -- Key Bindings
   keys = {
-    w = {player = players.red, func = "decrementYHeading"},
-    a = {player = players.red, func = "decrementXHeading"},
-    s = {player = players.red, func = "incrementYHeading"},
-    d = {player = players.red, func = "incrementXHeading"},
+    w = {player = players[1], func = "decrementYHeading"},
+    a = {player = players[1], func = "decrementXHeading"},
+    s = {player = players[1], func = "incrementYHeading"},
+    d = {player = players[1], func = "incrementXHeading"},
+    q = {player = players[1], func = "punch"},
 
-    i = {player = players.blue, func = "decrementYHeading"},
-    j = {player = players.blue, func = "decrementXHeading"},
-    k = {player = players.blue, func = "incrementYHeading"},
-    l = {player = players.blue, func = "incrementXHeading"},
+    i = {player = players[2], func = "decrementYHeading"},
+    j = {player = players[2], func = "decrementXHeading"},
+    k = {player = players[2], func = "incrementYHeading"},
+    l = {player = players[2], func = "incrementXHeading"},
+    u = {player = players[2], func = "punch"},
 
-    up = {player = players.cyan, func = "decrementYHeading"},
-    left = {player = players.cyan, func = "decrementXHeading"},
-    down = {player = players.cyan, func = "incrementYHeading"},
-    right = {player = players.cyan, func = "incrementXHeading"},
+    up = {player = players[3], func = "decrementYHeading"},
+    left = {player = players[3], func = "decrementXHeading"},
+    down = {player = players[3], func = "incrementYHeading"},
+    right = {player = players[3], func = "incrementXHeading"},
+    rctrl = {player = players[3], func = "punch"},
 
-    kp8 = {player = players.green, func = "decrementYHeading"},
-    kp4 = {player = players.green, func = "decrementXHeading"},
-    kp5 = {player = players.green, func = "incrementYHeading"},
-    kp6 = {player = players.green, func = "incrementXHeading"}
+    kp8 = {player = players[4], func = "decrementYHeading"},
+    kp4 = {player = players[4], func = "decrementXHeading"},
+    kp5 = {player = players[4], func = "incrementYHeading"},
+    kp6 = {player = players[4], func = "incrementXHeading"},
+    kp0 = {player = players[4], func = "punch"}
   }
 
   animation = newAnimation(love.graphics.newImage("oldHero.png"), 16, 18, 1)
@@ -106,7 +111,7 @@ function love.update(dt)
 
   for key, value in pairs(keys) do
     if love.keyboard.isDown(key) then
-      value.player[value.func](player)
+      value.player[value.func](value.player)
     end
   end
 
@@ -188,7 +193,7 @@ end
 -- remove comments on lines 40 and 41 if you would like to see an animation in process
 
 function love.draw()
-  love.graphics.scale(2, 2)
+  love.graphics.scale(screen_scalar, screen_scalar)
 
   love.graphics.print("testSprite position:", 50, 50)
   love.graphics.print("testSprite Position:", 50, 70)
@@ -264,7 +269,7 @@ function updateSpritePositionDelta()
 end
 
 function love.keypressed(key, u)
-  if key == "rctrl" then
+  if key == "lctrl" then
     debug.debug()
   end
 
