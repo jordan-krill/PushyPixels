@@ -29,8 +29,7 @@ function love.load()
       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     }
 
-    grid_width = 64 * 12
-    grid_height = 64 * 12
+   
 
     -- Load sprite metadata
     json = require("json")
@@ -54,6 +53,10 @@ print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
     block_width = tile:getWidth()
     block_height = tile:getHeight()
     block_depth = block_height / 2
+    grid_width = block_width * 12
+    grid_height = block_height * 12
+    player.grid_x = xPos_oldHero
+    player.grid_y = yPos_oldHero
     
     for x = 1, 5 do 
         local sub_table_item = {}
@@ -145,26 +148,26 @@ function love.update(dt)
 -- OldHero Keyboard Control --
   if love.keyboard.isDown('up') then
     yPos_oldHero = yPos_oldHero - 10
-    player.grid_x = player.grid_x + math.sin(math.rad(30)) + 10
-    player.grid_y = player.grid_y - math.cos(math.rad(30)) - 10
+    player.grid_x = (player.grid_x + 10) + math.sin(math.rad(30))
+    player.grid_y = (player.grid_y - 10) - math.cos(math.rad(30))
   end
 
   if love.keyboard.isDown('down') then
     yPos_oldHero = yPos_oldHero + 10
-    player.grid_x = player.grid_x - math.sin(math.rad(30)) - 10
-    player.grid_y = player.grid_y + math.cos(math.rad(30)) + 10
+    player.grid_x = player.grid_x - math.sin(math.rad(60)) - 10
+    player.grid_y = player.grid_y + math.cos(math.rad(60)) + 10
   end
 
   if love.keyboard.isDown('left') then
     xPos_oldHero = xPos_oldHero - 10
-    player.grid_x = player.grid_x - math.cos(math.rad(30)) - 10
-    player.grid_y = player.grid_y - math.sin(math.rad(30)) - 10
+    player.grid_x = player.grid_x - math.cos(math.rad(60)) - 10
+    player.grid_y = player.grid_y - math.sin(math.rad(60)) - 10
   end
 
   if love.keyboard.isDown('right') then
     xPos_oldHero = xPos_oldHero + 10
-    player.grid_x = player.grid_x + math.cos(math.rad(30)) + 10
-    player.grid_y = player.grid_y + math.sin(math.rad(30)) + 10
+    player.grid_x = player.grid_x + math.cos(math.rad(60)) + 10
+    player.grid_y = player.grid_y + math.sin(math.rad(60)) + 10
   end
 
   if offMap() then
@@ -191,8 +194,8 @@ function love.draw()
         for x = 1, #map do
           if map[y][x] == 1 then
             love.graphics.draw(tile,
-                grid_x + ((y-x) * (block_width /2)),
-                grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (#map / 2)) - block_depth)
+                grid_width / 2 + ((y-x) * (block_width /2)),
+                grid_height / 2 + ((x+y) * (block_depth / 2)) - (block_depth * (#map / 2)) - block_depth)
           end
         end
     end
