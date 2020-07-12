@@ -10,8 +10,27 @@ local yPos_rate_yPos_oldHero = 1
 local xPos_rate_yPos_testSprite = 1
 local yPos_rate_yPos_testSprite = 1
 local enemies = {}
+local player = {}
 
 function love.load()
+
+    map = {
+		  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    }
+
+    grid_width = 64 * 12
+    grid_height = 64 * 12
 
     -- Load sprite metadata
     json = require("json")
@@ -30,6 +49,8 @@ print(arms_se_red_meta['frames']['arms_se_red 0.aseprite']['sourceSize']['w'])
     --tile = love.graphics.newImage('floor.png')
     grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
     grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
+    player.grid_x = grid_x
+    player.grid_y = grid_y
     block_width = tile:getWidth()
     block_height = tile:getHeight()
     block_depth = block_height / 2
@@ -124,20 +145,31 @@ function love.update(dt)
 -- OldHero Keyboard Control --
   if love.keyboard.isDown('up') then
     yPos_oldHero = yPos_oldHero - 10
+    player.grid_x = player.grid_x + math.sin(math.rad(30)) + 10
+    player.grid_y = player.grid_y - math.cos(math.rad(30)) - 10
   end
 
   if love.keyboard.isDown('down') then
     yPos_oldHero = yPos_oldHero + 10
+    player.grid_x = player.grid_x - math.sin(math.rad(30)) - 10
+    player.grid_y = player.grid_y + math.cos(math.rad(30)) + 10
   end
 
   if love.keyboard.isDown('left') then
     xPos_oldHero = xPos_oldHero - 10
+    player.grid_x = player.grid_x - math.cos(math.rad(30)) - 10
+    player.grid_y = player.grid_y - math.sin(math.rad(30)) - 10
   end
 
   if love.keyboard.isDown('right') then
     xPos_oldHero = xPos_oldHero + 10
+    player.grid_x = player.grid_x + math.cos(math.rad(30)) + 10
+    player.grid_y = player.grid_y + math.sin(math.rad(30)) + 10
   end
 
+  if offMap() then
+    yPos_oldHero = yPos_oldHero + 10
+  end
 
 end
 
@@ -155,11 +187,13 @@ function love.draw()
   love.graphics.print(yPos_oldHero, 170, 150)
 
       -- this generates the arena
-    for x = 1, grid_size do
-        for y = 1, grid_size do
+    for y = 1, #map do
+        for x = 1, #map do
+          if map[y][x] == 1 then
             love.graphics.draw(tile,
                 grid_x + ((y-x) * (block_width /2)),
-                grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
+                grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (#map / 2)) - block_depth)
+          end
         end
     end
 
@@ -223,4 +257,17 @@ function love.keypressed(key, u)
     end
  end
 
+
+ function offMap()
+  if map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+      return false
+  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+      return false
+  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+      return false
+  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+      return false
+  end
+  return true
+end
 
