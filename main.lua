@@ -16,15 +16,15 @@ function love.load()
 
     map = {
 		  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,0 , 0},
-		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-      { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-      { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-		  { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-      { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0 , 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+      { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     }
@@ -148,8 +148,8 @@ function love.update(dt)
 -- OldHero Keyboard Control --
   if love.keyboard.isDown('up') then
     yPos_oldHero = yPos_oldHero - 10
-    player.grid_x = (player.grid_x) + math.sin(math.rad(30)) + 10
-    player.grid_y = (player.grid_y) - math.cos(math.rad(30)) - 10
+    player.grid_x = player.grid_x + math.sin(math.rad(30)) + 10
+    player.grid_y = player.grid_y - math.cos(math.rad(30)) - 10
   end
 
   if love.keyboard.isDown('down') then
@@ -262,13 +262,13 @@ function love.keypressed(key, u)
 
 
  function offMap()
-  if map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+  if map[math.floor(player.grid_y / 64) - 1][math.floor(player.grid_x / 64 )] == 1 then
       return false
-  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+  elseif map[math.floor(player.grid_y / 64) + 1][math.floor(player.grid_x / 64 )] == 1 then
       return false
-  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 ) - 1] == 1 then
       return false
-  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 )] == 1 then
+  elseif map[math.floor(player.grid_y / 64)][math.floor(player.grid_x / 64 ) + 1] == 1 then
       return false
   end
   return true
