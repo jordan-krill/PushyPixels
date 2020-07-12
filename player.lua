@@ -4,14 +4,14 @@ local animation = require("animation")
 function player:new(color, extension)
     local t = setmetatable(extension or { }, self)
     self.__index = self
-    self.color = color
-    self.heading = {x = 0, y = 0}
-    self.position = {x = 0, y = 0}
-    self.strength = 10
-    self.speed = 10
-    self.currentFrame = 0
-    self.name = "arms_" .. color
-    self:load()
+    t.color = color
+    t.heading = {x = 0, y = 0}
+    t.position = {x = 0, y = 0}
+    t.strength = 10
+    t.speed = 10
+    t.currentFrame = 0
+    t.name = "arms_" .. color
+    t:load()
     return t
 end
 
