@@ -170,7 +170,7 @@ function love.draw()
     -- love.graphics.print  
   elseif state['game'] then
     local bg_tracker = math.floor(bg.currentTime / bg.duration * #bg.quads) + 1
-    love.graphics.draw(bg.spriteSheet,bg.quads[bg_tracker], 0, 0, 0, 2, 2, 0, 0, 0, 0)
+    love.graphics.draw(bg.spriteSheet,bg.quads[bg_tracker], 0, 0, 0, (love.graphics.getWidth() / 320), (love.graphics.getHeight()/ 320), 0, 0, 0, 0)
     love.graphics.print("testSprite position:", 50, 50)
     love.graphics.print("testSprite Position:", 50, 70)
     love.graphics.print(xPos_testSprite, 170, 50)
