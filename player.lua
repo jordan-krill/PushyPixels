@@ -1,7 +1,7 @@
 local player = {}
 local animation = require("animation")
 
-function player:new(color, extension)
+function player:new(color, transform, extension)
     local t = setmetatable(extension or { }, self)
     self.__index = self
     t.color = color
@@ -13,6 +13,7 @@ function player:new(color, extension)
     t.name = "arms_" .. color
     t.direction = "se"
     t.isPunching = false;
+    t.transform = transform
     t:load()
     return t
 end
@@ -30,10 +31,11 @@ end
 
 function player:updateAnimation(dt)
     if not (self.heading.x == 0 and self.heading.y == 0) then
-        local heading_mag = math.sqrt(self.heading.x^2 + self.heading.y^2)
+        local transformedX, transformedY = self.transform:transformPoint(self.heading.x, self.heading.y)
+        local heading_mag = math.sqrt(transformedX^2 + transformedY^2)
 
-        local heading_angle = math.acos(self.heading.x / heading_mag)
-        if (self.heading.y > 0) then
+        local heading_angle = math.acos(transformedX / heading_mag)
+        if (transformedY > 0) then
             heading_angle = heading_angle + ((math.pi - heading_angle) * 2)
         end
         
@@ -46,6 +48,7 @@ function player:updateAnimation(dt)
         else
             self.direction = "se"
         end
+
     end
 
     self.animations.time = self.animations.time + dt
@@ -81,25 +84,34 @@ end
 
 function player:draw()
     local spriteSize = self.metadata.frames[self.animations.current_animation .. self.animations.index].sourceSize
-    local x = self.position.x + (spriteSize.w / 2)
-    local y = self.position.y + spriteSize.h
+    local transformedX, transformedY = self.transform:transformPoint(self.position.x, self.position.y)
+    local x = transformedX + (spriteSize.w / 2)
+    local y = transformedY + spriteSize.h
     love.graphics.draw(self.sprite_sheet, self.animations[self.animations.current_animation][self.animations.index], x, y)
 end
 
 function player:incrementXHeading()
-    self.heading.x = self.heading.x + 1
+    local x, y = self.transform:inverseTransformPoint(1, 0)
+    self.heading.x = self.heading.x + x
+    self.heading.y = self.heading.y + y
 end
 
 function player:decrementXHeading()
-    self.heading.x = self.heading.x - 1
+    local x, y = self.transform:inverseTransformPoint(-1, 0)
+    self.heading.x = self.heading.x + x
+    self.heading.y = self.heading.y + y
 end
 
 function player:incrementYHeading()
-    self.heading.y = self.heading.y + 1
+    local x, y = self.transform:inverseTransformPoint(0, 1)
+    self.heading.x = self.heading.x + x
+    self.heading.y = self.heading.y + y
 end
 
 function player:decrementYHeading()
-    self.heading.y = self.heading.y - 1
+    local x, y = self.transform:inverseTransformPoint(0, -1)
+    self.heading.x = self.heading.x + x
+    self.heading.y = self.heading.y + y
 end
 
 function player:punch()

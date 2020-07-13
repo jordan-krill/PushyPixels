@@ -10,19 +10,27 @@ function love.load()
   -- Screen
   screen_scalar = 3;
   love.graphics.setDefaultFilter("nearest", "nearest")
-  --love.window.setMode(640, 360, {fullscreen = true})
+  love.window.setMode(640, 360, {fullscreen = true})
   screenWidth, screenHeight = love.graphics.getDimensions()
 
   -- Modules
   json = require("json")
   player = require("player")
+  
+  -- Transforms
+  objectTransform = love.math.newTransform()
+  objectTransform:scale(1, .5)
+  objectTransform:rotate(math.rad(45))
+
+  arenaTransform = objectTransform:clone()
+  arenaTransform:scale(math.sin(math.rad(45)) * 64, math.sin(math.rad(45)) * 64)
 
   -- Players
   players = {
-    player:new("red"),
-    player:new("blue"),
-    player:new("cyan"),
-    player:new("green"),
+    player:new("red", objectTransform),
+    player:new("blue", objectTransform),
+    player:new("cyan", objectTransform),
+    player:new("green", objectTransform),
   }
 
   -- Key Bindings
@@ -50,6 +58,21 @@ function love.load()
     kp5 = {player = players[4], func = "incrementYHeading"},
     kp6 = {player = players[4], func = "incrementXHeading"},
     kp0 = {player = players[4], func = "punch"}
+  }
+
+  map = {
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   }
 
   -- Misc. sprites
@@ -163,21 +186,23 @@ end
 -- remove comments on lines 40 and 41 if you would like to see an animation in process
 
 function love.draw()
-  love.graphics.scale(screen_scalar, screen_scalar)
+  love.graphics.translate(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
+  love.graphics.scale(2, 2)
+
+    -- Generates the arena
+    for y = 1, #map do
+        for x = 1, #map[1] do
+          if map[y][x] == 1 then
+            local transformedX, transformedY = arenaTransform:transformPoint(x - (#map[1] / 2) - .5, y - (#map / 2) - .5)
+            love.graphics.draw(tile, transformedX - 32, transformedY - 16)
+          end
+        end
+    end
 
   love.graphics.print("testSprite position:", 50, 50)
   love.graphics.print("testSprite Position:", 50, 70)
   love.graphics.print(xPos_testSprite, 170, 50)
   love.graphics.print(yPos_testSprite, 170, 70)
-
-  -- Generates arena
-  for x = 1, grid_size do
-    for y = 1, grid_size do
-      love.graphics.draw(tile,
-        grid_x + ((y-x) * (block_width /2)),
-        grid_y + ((x+y) * (block_depth / 2)) - (block_depth * (grid_size / 2)) - block_depth)
-    end
-  end
 
   for x = 1, 5 do
     local n = math.floor(enemies[x]['animation'].currentTime / enemies[x]['animation'].duration * #enemies[x]['animation'].quads) + 1
