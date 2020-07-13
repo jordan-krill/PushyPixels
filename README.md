@@ -9,7 +9,7 @@ Punch your beefy opponents off screen to win the battle!
 
 ### Controls
 
-##Player 1
+## layer 1
     w = up
     a = left
     s = down
@@ -17,21 +17,21 @@ Punch your beefy opponents off screen to win the battle!
     q = punch
     
     
-##Player 2
+## Player 2
     i = up
     j = left
     k = down
     l = right
     u = punch
 
-##Player 3
+## Player 3
     up = up
     left = left
     down = down
     right = right
     rctrl = punch
 
-##Player 4
+## Player 4
     numPad8 = up
     numPad4 = left
     numPad5 = down
