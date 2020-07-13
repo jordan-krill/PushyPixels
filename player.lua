@@ -7,7 +7,7 @@ function player:new(color, transform, extension)
     t.color = color
     t.heading = {x = 0, y = 0}
     t.position = {x = 0, y = 0}
-    t.strength = 10
+    t.strength = 1
     t.speed = .25
     t.name = "arms_" .. color
     t.direction = "se"
@@ -122,17 +122,6 @@ function player:checkFall(objects)
                     ((playerYMin >= floorYMin) and (playerYMin <= floorYMax))
                 )
             ) then
-                if (love.keyboard.isDown("z") and self.name == "arms_red") then
-                    print("floorXMin: ", floorXMin)
-                    print("floorXMax: ", floorXMax)
-                    print("floorYMin: ", floorYMin)
-                    print("floorYMax: ", floorYMax)
-                    print("playerXMin: ", playerXMin)
-                    print("playerXMax: ", playerXMax)
-                    print("playerYMin: ", playerYMin)
-                    print("playerYMax: ", playerYMax)
-                    print(" ")
-                end
                 safe = true
                 break
             end
