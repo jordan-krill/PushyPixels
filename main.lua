@@ -1,38 +1,26 @@
-local screenWidth, screenHeight = love.graphics.getDimensions()
-local spriteNum_testSprite = 1
-local xPos_testSprite = (screenWidth / 2)
-local yPos_testSprite = (screenHeight / 2)
-local xPos_rate_yPos_testSprite = 1
-local yPos_rate_yPos_testSprite = 1
-local enemies = {}
-
 function love.load()
   -- Screen
-  screen_scalar = 3;
   love.graphics.setDefaultFilter("nearest", "nearest")
   --love.window.setMode(640, 360, {fullscreen = true})
-  screenWidth, screenHeight = love.graphics.getDimensions()
 
   -- Modules
   json = require("json")
   player = require("player")
   
   -- Transforms
-  objectTransform = love.math.newTransform()
-  objectTransform:scale(1, .5)
-  objectTransform:rotate(math.rad(45))
-
-  arenaTransform = objectTransform:clone()
-  arenaTransform:scale(math.sin(math.rad(45)) * 64, math.sin(math.rad(45)) * 64)
+  transform = love.math.newTransform()
+  transform:scale(1, .5)
+  transform:rotate(math.rad(45))
+  transform:scale(math.sin(math.rad(45)) * 64, math.sin(math.rad(45)) * 64)
 
   objects = {}
 
   -- Players
   players = {
-    player:new("red", objectTransform),
-    player:new("blue", objectTransform),
-    player:new("cyan", objectTransform),
-    player:new("green", objectTransform),
+    player:new("red", transform),
+    player:new("blue", transform),
+    player:new("cyan", transform),
+    player:new("green", transform)
   }
 
   for i=1, #players do
@@ -70,14 +58,14 @@ function love.load()
   map = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-    { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   }
@@ -87,18 +75,18 @@ function love.load()
   for y = 1, #map do
     for x = 1, #map[1] do
       if map[y][x] > 0 then
-        local transformedX, transformedY = arenaTransform:transformPoint(x - (#map[1] / 2) - .5, y - (#map / 2) - .5)
-
         local mapFloor = {}
-        mapFloor.position = { x = transformedX, y = transformedY }
-        mapFloor.type = floor
+        local objectX = (x - (#map[1] / 2) - .5)
+        local objectY = (y - (#map / 2) - .5)
+        mapFloor.position = {x = objectX, y = objectY}
+        mapFloor.type = "floor"
         table.insert(floor, mapFloor)
         table.insert(objects, mapFloor)
         
         if map[y][x] > 1 then
           local mapBlock = {}
-          mapBlock.position = { x = transformedX, y = transformedY }
-          mapBlock.type = block
+          mapBlock.position = { x = objectX, y = objectY }
+          mapBlock.type = "block"
           table.insert(blocks, mapBlock)
           table.insert(objects, mapBlock)
         end
@@ -106,27 +94,8 @@ function love.load()
     end
   end
 
-
-  -- Misc. sprites
   --tile = love.graphics.newImage('floor.png')
   tile = love.graphics.newImage('metalic_tile.png')
-  animation_testSprite = newAnimation(love.graphics.newImage("testSprite.png"), 16, 18, 10)
-  
-  grid_x = math.floor(love.graphics.getWidth()/2) - math.floor(tile:getWidth()/2)
-  grid_y = math.floor(love.graphics.getHeight()/2) - math.floor(tile:getHeight()/2)
-  block_width = tile:getWidth()
-  block_height = tile:getHeight()
-  block_depth = block_height / 2
-  
-  for x = 1, 5 do 
-      local sub_table_item = {}
-      sub_table_item['animation'] = newAnimation(love.graphics.newImage("arms_red.png"), 64, 64, 1)
-      sub_table_item['x_location'] = math.random(grid_x)
-      sub_table_item['y_location'] = math.random(grid_y)
-      enemies[x] = sub_table_item
-  end
-
-  grid_size = 12
 
   red = 88 / 250
   green = 202 / 250
@@ -136,20 +105,6 @@ function love.load()
 end
 
 function love.update(dt)
-  updateSpritePositionDelta()
-
-  animation_testSprite.currentTime = animation_testSprite.currentTime + dt
-  if animation_testSprite.currentTime >= animation_testSprite.duration then
-    animation_testSprite.currentTime = animation_testSprite.currentTime - animation_testSprite.duration
-  end
-
-  for x=1,5 do 
-    enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime + dt
-    if enemies[x]['animation'].currentTime >= enemies[x]['animation'].duration then
-      enemies[x]['animation'].currentTime = enemies[x]['animation'].currentTime - enemies[x]['animation'].duration
-    end
-  end
-  
   -- Player associated key press
   for key, value in pairs(keys) do
     if love.keyboard.isDown(key) then
@@ -163,124 +118,24 @@ function love.update(dt)
     value:updatePosition(objects)
   end
 
-  -- Jordan Test Sprite Update
-  if not love.keyboard.isDown('w','a','s','d') then
-    spriteNum_testSprite = 9
-  end
-
- -- testSprite Keyboard Control --
-  if love.keyboard.isDown('w') then
-    spriteNum_testSprite = 1
-    yPos_testSprite = yPos_testSprite - yPos_rate_yPos_testSprite
-    if love.keyboard.isDown('d') then
-      spriteNum_testSprite = 6
-    end
-    if love.keyboard.isDown('a') then
-      spriteNum_testSprite = 7
-    end
-  end
-
-  if love.keyboard.isDown('s') then
-    spriteNum_testSprite = 2
-    yPos_testSprite = yPos_testSprite + yPos_rate_yPos_testSprite
-    if love.keyboard.isDown('d') then
-      spriteNum_testSprite = 8
-    end
-    if love.keyboard.isDown('a') then
-      spriteNum_testSprite = 5
-    end
-  end
-
-  if love.keyboard.isDown('a') then
-    spriteNum_testSprite = 4
-    xPos_testSprite = xPos_testSprite - xPos_rate_yPos_testSprite
-    if love.keyboard.isDown('w') then
-    spriteNum_testSprite = 7
-    end
-    if love.keyboard.isDown('s') then
-      spriteNum_testSprite = 5
-    end
-  end
-
-  if love.keyboard.isDown('d') then
-    spriteNum_testSprite = 3
-    xPos_testSprite = xPos_testSprite + xPos_rate_yPos_testSprite
-    if love.keyboard.isDown('w') then
-    spriteNum_testSprite = 6
-    end
-    if love.keyboard.isDown('s') then
-      spriteNum_testSprite = 8
-    end
-  end
-
 end
-
--- remove comments on lines 40 and 41 if you would like to see an animation in process
 
 function love.draw()
   love.graphics.translate(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
-  love.graphics.scale(3, 3)
+  love.graphics.scale(5, 5)
 
   -- Generates the arena
   for i = 1, #floor do
     local floorPos = floor[i].position
     -- Bad programmer, don't use magic numbers, BAD
-    love.graphics.draw(tile, floorPos.x - 32, floorPos.y - 16)
+    local floorX, floorY = transform:transformPoint(floorPos.x, floorPos.y)
+    love.graphics.draw(tile, floorX - 32, floorY - 16)
   end
 
   for key, value in pairs(players) do
     value:draw()
   end
 
-  love.graphics.print("testSprite position:", 50, 50)
-  love.graphics.print("testSprite Position:", 50, 70)
-  love.graphics.print(xPos_testSprite, 170, 50)
-  love.graphics.print(yPos_testSprite, 170, 70)
-
-  for x = 1, 5 do
-    local n = math.floor(enemies[x]['animation'].currentTime / enemies[x]['animation'].duration * #enemies[x]['animation'].quads) + 1
-    love.graphics.draw(enemies[x]['animation'].spriteSheet, enemies[x]['animation'].quads[n], enemies[x]['x_location'] + 1, enemies[x]['y_location'],0, 2)
-    updateEnemieMovement(x)
-  end
-
-  love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
-
-end
-
-function updateEnemieMovement(i)
-  enemies[i]['x_location'] = enemies[i]['x_location'] + 0.5
-end
-
--- TODO do we need this?
-function newAnimation(image, width, height)
-  local animation = {}
-  animation.spriteSheet = image;
-  animation.quads = {};
-
-  for y = 0, image:getHeight() - height, height do
-    for x = 0, image:getWidth() - width, width do
-      table.insert(animation.quads, love.graphics.newQuad(x, y, width, height, image:getDimensions()))
-    end
-  end
-
-  animation.duration = duration or 1
-  animation.currentTime = 0
-
-  return animation
-end
-
-function updateSpritePositionDelta()
-  if love.keyboard.isDown('kp+') then
-
-    if not love.keyboard.isDown('kp+') then
-      xPos_rate_yPos_testSprite = xPos_rate_yPos_testSprite + 1
-      yPos_rate_yPos_testSprite = yPos_rate_yPos_testSprite + 1
-    end
-
-    if love.keyboard.isDown('kp-') then
-    end
-
-  end
 end
 
 function love.keypressed(key, u)

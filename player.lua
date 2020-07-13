@@ -8,13 +8,12 @@ function player:new(color, transform, extension)
     t.heading = {x = 0, y = 0}
     t.position = {x = 0, y = 0}
     t.strength = 10
-    t.speed = 2
-    t.currentFrame = 0
+    t.speed = .25
     t.name = "arms_" .. color
     t.direction = "se"
     t.isPunching = false;
     t.transform = transform
-    t.type = player
+    t.type = "player"
     t.dead = false
     t:load()
     return t
@@ -26,7 +25,6 @@ function player:updatePosition(objects)
         self.position.x = self.position.x + (self.heading.x / heading_mag) * self.speed
         self.position.y = self.position.y + (self.heading.y / heading_mag) * self.speed
     end
-
     self:checkFall(objects)
 
     self.heading.x = 0
@@ -75,10 +73,6 @@ function player:updateAnimation(dt)
 
 end
 
-function player:detectCollision()
-    -- TODO
-end
-
 function player:load()
     self.metadata = json.decode(love.filesystem.read("arms_" .. self.color .. ".json"))
     self.sprite_sheet = love.graphics.newImage("arms_" .. self.color .. ".png")
@@ -87,7 +81,7 @@ function player:load()
 end
 
 function player:draw()
-    if not dead then
+    if not self.dead then
         local spriteSize = self.metadata.frames[self.animations.current_animation .. self.animations.index].sourceSize
         local transformedX, transformedY = self.transform:transformPoint(self.position.x, self.position.y)
         local x = transformedX - (spriteSize.w * .5)
@@ -97,19 +91,56 @@ function player:draw()
 end
 
 function player:checkFall(objects)
-    local safe = true;
+    local safe = false;
     for i=1, #objects do
-        if objects.type == "floor" then
-            local floorX = object[i].position.x
-            local translatedFloorX = floorX - (love.graphics.getWidth() / 2)
-            local floorXMin = 0
+        if objects[i].type == "floor" then
 
-            local floorY = object[i].position.y
-            local translatedFloorY = floorY - (love.graphics.getHeight() / 2)
+            local translatedFloorX = objects[i].position.x +10
+            local floorXMin = translatedFloorX - .5
+            local floorXMax = translatedFloorX + .5
+            local translatedFloorY = objects[i].position.y + 10
+            local floorYMin = translatedFloorY - .5
+            local floorYMax = translatedFloorY + .5
+
+            local translatedPlayerX = self.position.x +10
+            local playerXMin = translatedPlayerX - .5
+            local playerXMax = translatedPlayerX + .5
+            local translatedPlayerY = self.position.y + 10
+            local playerYMin = translatedPlayerY - .5
+            local playerYMax = translatedPlayerY + .5
+
+            if (
+                (
+                    ((playerXMax >= floorXMin) and (playerXMax <= floorXMax))
+                    or
+                    ((playerXMin >= floorXMin) and (playerXMin <= floorXMax))
+                )
+                and
+                (
+                    ((playerYMax >= floorYMin) and (playerYMax <= floorYMax))
+                    or
+                    ((playerYMin >= floorYMin) and (playerYMin <= floorYMax))
+                )
+            ) then
+                if (love.keyboard.isDown("z") and self.name == "arms_red") then
+                    print("floorXMin: ", floorXMin)
+                    print("floorXMax: ", floorXMax)
+                    print("floorYMin: ", floorYMin)
+                    print("floorYMax: ", floorYMax)
+                    print("playerXMin: ", playerXMin)
+                    print("playerXMax: ", playerXMax)
+                    print("playerYMin: ", playerYMin)
+                    print("playerYMax: ", playerYMax)
+                    print(" ")
+                end
+                safe = true
+                break
+            end
+
         end
     end
-    if not safe then
-        dead = true
+    if not (safe or self.dead) then
+        self.dead = true
     end
 end
 
