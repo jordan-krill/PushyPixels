@@ -7,6 +7,9 @@ Punch your beefy opponents off screen to win the battle!
 ![](arms_front.gif)
 
 
+### Play it!
+https://github.com/jordan-krill/PushyPixels/blob/master/PushyPixels.exe
+
 ### Controls
 
 ## layer 1
