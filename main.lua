@@ -1,7 +1,7 @@
 function love.load()
   -- Screen
   love.graphics.setDefaultFilter("nearest", "nearest")
-  --love.window.setMode(640, 360, {fullscreen = true})
+  love.window.setMode(640, 360, {fullscreen = true})
 
   -- Modules
   json = require("json")
