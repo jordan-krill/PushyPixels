@@ -10,7 +10,7 @@ function love.load()
   -- Screen
   screen_scalar = 3;
   love.graphics.setDefaultFilter("nearest", "nearest")
-  love.window.setMode(640, 360, {fullscreen = true})
+  --love.window.setMode(640, 360, {fullscreen = true})
   screenWidth, screenHeight = love.graphics.getDimensions()
 
   -- Modules
@@ -25,6 +25,8 @@ function love.load()
   arenaTransform = objectTransform:clone()
   arenaTransform:scale(math.sin(math.rad(45)) * 64, math.sin(math.rad(45)) * 64)
 
+  objects = {}
+
   -- Players
   players = {
     player:new("red", objectTransform),
@@ -32,6 +34,10 @@ function love.load()
     player:new("cyan", objectTransform),
     player:new("green", objectTransform),
   }
+
+  for i=1, #players do
+    table.insert(objects, players[i])
+  end
 
   -- Key Bindings
   keys = {
@@ -60,6 +66,7 @@ function love.load()
     kp0 = {player = players[4], func = "punch"}
   }
 
+  -- Map generation
   map = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -74,6 +81,31 @@ function love.load()
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   }
+  
+  floor = {}
+  blocks = {}
+  for y = 1, #map do
+    for x = 1, #map[1] do
+      if map[y][x] > 0 then
+        local transformedX, transformedY = arenaTransform:transformPoint(x - (#map[1] / 2) - .5, y - (#map / 2) - .5)
+
+        local mapFloor = {}
+        mapFloor.position = { x = transformedX, y = transformedY }
+        mapFloor.type = floor
+        table.insert(floor, mapFloor)
+        table.insert(objects, mapFloor)
+        
+        if map[y][x] > 1 then
+          local mapBlock = {}
+          mapBlock.position = { x = transformedX, y = transformedY }
+          mapBlock.type = block
+          table.insert(blocks, mapBlock)
+          table.insert(objects, mapBlock)
+        end
+      end
+    end
+  end
+
 
   -- Misc. sprites
   --tile = love.graphics.newImage('floor.png')
@@ -128,7 +160,7 @@ function love.update(dt)
   -- Player update
   for key, value in pairs(players) do
     value:updateAnimation(dt)
-    value:updatePosition()
+    value:updatePosition(objects)
   end
 
   -- Jordan Test Sprite Update
@@ -187,17 +219,18 @@ end
 
 function love.draw()
   love.graphics.translate(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
-  love.graphics.scale(2, 2)
+  love.graphics.scale(3, 3)
 
-    -- Generates the arena
-    for y = 1, #map do
-        for x = 1, #map[1] do
-          if map[y][x] == 1 then
-            local transformedX, transformedY = arenaTransform:transformPoint(x - (#map[1] / 2) - .5, y - (#map / 2) - .5)
-            love.graphics.draw(tile, transformedX - 32, transformedY - 16)
-          end
-        end
-    end
+  -- Generates the arena
+  for i = 1, #floor do
+    local floorPos = floor[i].position
+    -- Bad programmer, don't use magic numbers, BAD
+    love.graphics.draw(tile, floorPos.x - 32, floorPos.y - 16)
+  end
+
+  for key, value in pairs(players) do
+    value:draw()
+  end
 
   love.graphics.print("testSprite position:", 50, 50)
   love.graphics.print("testSprite Position:", 50, 70)
@@ -212,9 +245,6 @@ function love.draw()
 
   love.graphics.draw(animation_testSprite.spriteSheet, animation_testSprite.quads[spriteNum_testSprite], xPos_testSprite, yPos_testSprite, 0, 4)
 
-  for key, value in pairs(players) do
-    value:draw()
-  end
 end
 
 function updateEnemieMovement(i)

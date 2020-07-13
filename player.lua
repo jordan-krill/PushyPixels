@@ -14,16 +14,20 @@ function player:new(color, transform, extension)
     t.direction = "se"
     t.isPunching = false;
     t.transform = transform
+    t.type = player
+    t.dead = false
     t:load()
     return t
 end
 
-function player:updatePosition()
+function player:updatePosition(objects)
     if not (self.heading.x == 0 and self.heading.y == 0) then
         local heading_mag = math.sqrt(self.heading.x^2 + self.heading.y^2)
         self.position.x = self.position.x + (self.heading.x / heading_mag) * self.speed
         self.position.y = self.position.y + (self.heading.y / heading_mag) * self.speed
     end
+
+    self:checkFall(objects)
 
     self.heading.x = 0
     self.heading.y = 0
@@ -83,11 +87,30 @@ function player:load()
 end
 
 function player:draw()
-    local spriteSize = self.metadata.frames[self.animations.current_animation .. self.animations.index].sourceSize
-    local transformedX, transformedY = self.transform:transformPoint(self.position.x, self.position.y)
-    local x = transformedX + (spriteSize.w / 2)
-    local y = transformedY + spriteSize.h
-    love.graphics.draw(self.sprite_sheet, self.animations[self.animations.current_animation][self.animations.index], x, y)
+    if not dead then
+        local spriteSize = self.metadata.frames[self.animations.current_animation .. self.animations.index].sourceSize
+        local transformedX, transformedY = self.transform:transformPoint(self.position.x, self.position.y)
+        local x = transformedX - (spriteSize.w * .5)
+        local y = transformedY - (spriteSize.h * .75)
+        love.graphics.draw(self.sprite_sheet, self.animations[self.animations.current_animation][self.animations.index], x, y)
+    end
+end
+
+function player:checkFall(objects)
+    local safe = true;
+    for i=1, #objects do
+        if objects.type == "floor" then
+            local floorX = object[i].position.x
+            local translatedFloorX = floorX - (love.graphics.getWidth() / 2)
+            local floorXMin = 0
+
+            local floorY = object[i].position.y
+            local translatedFloorY = floorY - (love.graphics.getHeight() / 2)
+        end
+    end
+    if not safe then
+        dead = true
+    end
 end
 
 function player:incrementXHeading()
