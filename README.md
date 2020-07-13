@@ -12,7 +12,7 @@ https://debuggerdave.itch.io/pushypixels
 
 ### Controls
 
-## layer 1
+## Player 1
     w = up
     a = left
     s = down
