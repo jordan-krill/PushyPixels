@@ -139,10 +139,6 @@ function love.draw()
 end
 
 function love.keypressed(key, u)
-  if key == "lctrl" then
-    debug.debug()
-  end
-
   if key == 'escape' then
     love.event.quit()
   end
