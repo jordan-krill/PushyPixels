@@ -115,7 +115,7 @@ function love.update(dt)
   -- Player update
   for key, value in pairs(players) do
     value:updateAnimation(dt)
-    value:updatePosition(objects)
+    value:updatePosition(objects, dt)
   end
 
 end
