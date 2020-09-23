@@ -10,6 +10,8 @@ Punch your beefy opponents off screen to win the battle!
 ### Play it!
 https://debuggerdave.itch.io/pushypixels
 
+![](pushyPixelsScreenshot.png)
+
 ### Controls
 
 ## Player 1
